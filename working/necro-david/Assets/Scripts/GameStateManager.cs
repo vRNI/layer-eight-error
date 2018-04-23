@@ -2,7 +2,7 @@
 using System;
 using JetBrains.Annotations;
 
-[DisallowMultipleComponent]
+[ DisallowMultipleComponent ]
 public class GameStateManager
     : MonoBehaviour
 {
@@ -29,8 +29,11 @@ public class GameStateManager
     public void SetCurrentState( [ NotNull ] GameState a_currentState )
     {
         if ( a_currentState == null ) { throw new ArgumentNullException( "a_currentState" ); }
+        if ( a_currentState == m_currentState ) { return; }
 
+        m_currentState.Exiting();
         m_currentState = a_currentState;
+        a_currentState.Entering();
     }
 
     // Use this for pre-initialization
@@ -45,6 +48,7 @@ public class GameStateManager
     {
         // Idle state by default.
         m_currentState = new IdleState();
+        m_currentState.Entering();
     }
 
     // Update is called once per frame

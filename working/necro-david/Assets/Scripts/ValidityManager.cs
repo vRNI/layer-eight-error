@@ -31,4 +31,31 @@ public static class ValidityManager
 
         return manager;
     }
+
+    /// <summary>
+    /// Finds the player in the scene.
+    /// </summary>
+    /// <returns>
+    /// The player game object.
+    /// </returns>
+    [ NotNull ]
+    public static GameObject FindPlayer()
+    {
+        var playerObjects = GameObject.FindGameObjectsWithTag( TagName.Player );
+
+        if ( playerObjects.Length != 1 ) { throw new RuntimeException( "Player can not be located ( there are '" + playerObjects.Length + "' players in the scene." ); }
+
+        return playerObjects[ 0 ];
+    }
+
+    /// <summary>
+    /// Terminate the application because of an unexpected error.
+    /// </summary>
+    public static void TerminateUnexpectedly( string a_errorMessage = null )
+    {
+        Debug.Log( "An unexpected error occurred." );
+        if ( string.IsNullOrEmpty( a_errorMessage ) == false ) { Debug.Log( a_errorMessage ); }
+
+        throw new InitializationErrorException( a_errorMessage );
+    }
 }
