@@ -46,6 +46,17 @@ public static class Finder
     }
 
     /// <summary>
+    /// Gets the player height as 3D vector ( only y component is set, x and z are 0.0f ).
+    /// </summary>
+    public static Vector3 GetPlayerHeight()
+    {
+        var player  = GetPlayer();
+        var capsule = player.GetComponent< CapsuleCollider >();
+
+        return new Vector3( 0.0f, capsule.height, 0.0f );
+    }
+
+    /// <summary>
     /// Gets the one and only player game object.
     /// </summary>
     public static GameObject GetPlayer()

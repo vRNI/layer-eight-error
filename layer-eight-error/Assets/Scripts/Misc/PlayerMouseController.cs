@@ -26,7 +26,8 @@ public class PlayerMouseController
             RaycastHit hit;
             if ( Physics.Raycast( ray, out hit ) == true )
             {
-                m_desiredPosition = hit.point;
+                // add half of player height to desired position, so the distance for idle / walk states are correctly calculated
+                m_desiredPosition = hit.point + Finder.GetPlayerHeight() / 2.0f;
             }
         }
     }

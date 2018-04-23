@@ -4,6 +4,13 @@ using UnityEngine;
 public class IdlePlayerState
     : PlayerState
 {
+    public override void Enter()
+    {
+        base.Enter();
+
+        Debug.Log( "Player starts idleing." );
+    }
+
     public override void Update()
     {
         base.Update();

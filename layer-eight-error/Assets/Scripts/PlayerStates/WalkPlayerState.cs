@@ -5,6 +5,13 @@ using UnityEngine.AI;
 public class WalkPlayerState
     : PlayerState
 {
+    public override void Enter()
+    {
+        base.Enter();
+
+        Debug.Log( "Player starts walking." );
+    }
+
     public override void Update()
     {
         base.Update();
