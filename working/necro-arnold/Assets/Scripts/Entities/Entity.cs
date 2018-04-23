@@ -28,15 +28,15 @@ public abstract class Entity : MonoBehaviour {
     public virtual void SetState<TState>()
         where TState : EntityState, new()
     {
-        m_manager.SetCurrentState <TState>();
+        m_manager.SetCurrentState<TState>();
     }
 
-    public abstract void AttackTarget(GameObject target);
+    //public abstract void AttackTarget(GameObject target);
 
     public virtual void Seek(Vector3 target)
     {
-        target.x += formationPosition.x;
-        target.z += formationPosition.z;
+        target.x += formationPosition.X;
+        target.z += formationPosition.Y;
         navMeshAgent.SetDestination(target);
     }
 
