@@ -337,4 +337,4 @@ MonoBehaviour:
   fov: 60
   near: 0.3
   far: 1000
-  orthographicSize: 100
+  orthographicSize: 10

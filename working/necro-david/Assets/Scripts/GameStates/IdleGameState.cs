@@ -15,7 +15,6 @@ public class IdleState
         if ( Input.GetButtonDown( AxisName.OpenFormationEditor ) == true )
         {
             gameStateManager.SetCurrentState< FormationState >();
-
             return;
         }
 

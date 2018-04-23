@@ -31,13 +31,15 @@ public class FormationState
     {
         base.Entering();
 
+        ValidityManager.FindOrthoPerspectiveSwitcher().SwitchToOrtho();
+
         // check hard-coded formation size
         if ( FormationParameters.FormationSlotSizeX % 2 == 0 || FormationParameters.FormationSlotSizeY % 2 == 0 )
         {
             ValidityManager.TerminateUnexpectedly( "Formation size must be odd ( x a and y dimension )." );
         }
 
-        var prefabManager = ValidityManager.FindManager<PrefabManager>();
+        var prefabManager = ValidityManager.FindManager< PrefabManager >();
 
         // create placement objects if required
         if ( s_slotObjects == null ) { s_slotObjects = new GameObject[ FormationParameters.FormationSlotCount ]; }
@@ -85,14 +87,12 @@ public class FormationState
 
     public override void Update()
     {
-        // todo follow player in grid here...
-        if ( Input.GetButton( "Submit"  ) == true )
+        var gameStateManager = ValidityManager.FindManager< GameStateManager >();
+
+        if ( Input.GetButtonDown( AxisName.OpenFormationEditor ) )
         {
-            Camera.main.orthographic = true;
-        }
-        else if ( Input.GetButton( "Cancel" ) == true )
-        {
-            Camera.main.orthographic = false;
+            gameStateManager.SetCurrentState< IdleState >();
+            return;
         }
     }
     
@@ -101,8 +101,10 @@ public class FormationState
         // disable placement objects after state exits to remove unnecessary overhead.
         foreach ( var @object in s_slotObjects )
         {
-            @object.SetActive( false );
+            if ( @object != null ) { @object.SetActive( false ); }
         }
+
+        ValidityManager.FindOrthoPerspectiveSwitcher().SwitchToPerspective();
 
         base.Exiting();
     }

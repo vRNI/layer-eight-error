@@ -49,6 +49,23 @@ public static class ValidityManager
     }
 
     /// <summary>
+    /// Gets the ortho-perspective switcher.
+    /// </summary>
+    /// <returns>
+    /// The ortho-perspective switcher.
+    /// </returns>
+    [ NotNull ]
+    public static OrthoPerspectiveSwitcher FindOrthoPerspectiveSwitcher()
+    {
+        var camera = Camera.main;
+        var switcher = camera.GetComponent< OrthoPerspectiveSwitcher >();
+
+        if ( switcher == null ) { throw new RuntimeException( "The active main camera has no ortho-perspective switcher." ); }
+
+        return switcher;
+    }
+
+    /// <summary>
     /// Terminate the application because of an unexpected error.
     /// </summary>
     public static void TerminateUnexpectedly( string a_errorMessage = null )
