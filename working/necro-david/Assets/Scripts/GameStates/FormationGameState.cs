@@ -8,6 +8,21 @@ public class FormationState
     /// </summary>
     private static GameObject[] SlotObjects;
 
+    /// <summary>
+    /// Drag'n'drop source for free fighter units.
+    /// </summary>
+    private static GameObject FreeFighterUnits;
+    
+    /// <summary>
+    /// Drag'n'drop source for free ranger units.
+    /// </summary>
+    private static GameObject FreeRangerUnits;
+    
+    /// <summary>
+    /// Drag'n'drop source for free mage units.
+    /// </summary>
+    private static GameObject FreeMageUnits;
+
     public FormationState()
     {
     }
@@ -25,11 +40,12 @@ public class FormationState
         var prefabManager = ValidityManager.FindManager<PrefabManager>();
 
         // create placement objects if required
-        if ( SlotObjects == null )
-        {
-            SlotObjects = new GameObject[ FormationParameters.FormationSlotCount ];
-        }
+        if ( SlotObjects == null ) { SlotObjects = new GameObject[ FormationParameters.FormationSlotCount ]; }
+        if ( FreeFighterUnits == null ) { FreeFighterUnits = prefabManager.GetFormationFreeFighterUnits(); }
+        if ( FreeRangerUnits == null ) { FreeRangerUnits = prefabManager.GetFormationFreeRangerUnits(); }
+        if ( FreeMageUnits == null ) { FreeMageUnits = prefabManager.GetFormationFreeMageUnits(); }
 
+        // place slot grid
         int centerX = ( FormationParameters.FormationSlotSizeX - 1 ) / 2;
         int centerY = ( FormationParameters.FormationSlotSizeX - 1 ) / 2;
 
@@ -45,6 +61,9 @@ public class FormationState
                 // create placement objects if required
                 if ( SlotObjects[ index ] == null ) { SlotObjects[index] = prefabManager.GetFormationSlotPlacement(); }
                 
+                // enable object again before use
+                SlotObjects[ index ].SetActive( true );
+
                 var transform = SlotObjects[ index ].GetComponent< Transform >();
 
                 int offsetX   = x - centerX;
@@ -57,6 +76,12 @@ public class FormationState
                 transform.SetPositionAndRotation( position, rotation );
             }
         }
+
+        // place free units objects
+        FreeFighterUnits.GetComponent< Transform >().position = new Vector3( -centerX * FormationParameters.FormationSlotDistance.x, 0.0f, ( centerY + 2 ) * FormationParameters.FormationSlotDistance.y );
+        FreeRangerUnits.GetComponent< Transform >().position  = new Vector3(        0 * FormationParameters.FormationSlotDistance.x, 0.0f, ( centerY + 2 ) * FormationParameters.FormationSlotDistance.y );
+        FreeMageUnits.GetComponent< Transform >().position    = new Vector3(  centerX * FormationParameters.FormationSlotDistance.x, 0.0f, ( centerY + 2 ) * FormationParameters.FormationSlotDistance.y );
+
     }
 
     public override void Update()
@@ -67,7 +92,7 @@ public class FormationState
     public override void Exiting()
     {
         // disable placement objects after state exits to remove unnecessary overhead.
-        foreach (var @object in SlotObjects)
+        foreach ( var @object in SlotObjects )
         {
             @object.SetActive( false );
         }

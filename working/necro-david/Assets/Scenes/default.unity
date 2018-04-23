@@ -162,6 +162,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_formationSlotPlacement: {fileID: 1833349355393526, guid: bdc66212fcbb1534eabe2b8b89a589df,
     type: 2}
+  m_formationFreeFighterUnits: {fileID: 1873739846904966, guid: e6c0fd3ee391e484eb3b4dabf08ca580,
+    type: 2}
+  m_formationFreeRangerUnits: {fileID: 1319221328955514, guid: 06d8db25215e3a14ab5c50b4971e9e39,
+    type: 2}
+  m_formationFreeMageUnits: {fileID: 1415656982490188, guid: 771feeb57688b5745b109d25a5611ae4,
+    type: 2}
 --- !u!1 &1698651087
 GameObject:
   m_ObjectHideFlags: 0
