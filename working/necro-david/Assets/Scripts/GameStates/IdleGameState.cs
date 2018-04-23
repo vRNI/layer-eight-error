@@ -14,7 +14,7 @@ public class IdleState
         // Check if the player activated the formation state.
         if ( Input.GetButtonDown( AxisName.OpenFormationEditor ) == true )
         {
-            gameStateManager.SetCurrentState( new FormationState() );
+            gameStateManager.SetCurrentState< FormationState >();
 
             return;
         }
@@ -22,7 +22,7 @@ public class IdleState
         // Check if enemies are near enough to trigger the battle state.
         if ( false )
         {
-            gameStateManager.SetCurrentState( new BattleState() );
+            gameStateManager.SetCurrentState< BattleState >();
         }
     }
 }

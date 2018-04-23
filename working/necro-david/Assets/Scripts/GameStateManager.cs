@@ -16,24 +16,16 @@ public class GameStateManager
     {
         return m_currentState;
     }
-
+    
     /// <summary>
     /// Sets the currently active game state.
     /// </summary>
-    /// <param name="a_currentState">
-    /// The game state to set.
-    /// </param>
-    /// <exception cref="ArgumentNullException">
-    /// <paramref name="a_currentState"/> is null.
-    /// </exception>
-    public void SetCurrentState( [ NotNull ] GameState a_currentState )
+    public void SetCurrentState< TState >()
+        where TState : GameState, new()
     {
-        if ( a_currentState == null ) { throw new ArgumentNullException( "a_currentState" ); }
-        if ( a_currentState == m_currentState ) { return; }
-
-        m_currentState.Exiting();
-        m_currentState = a_currentState;
-        a_currentState.Entering();
+        m_currentState.Exiting();;
+        m_currentState = new TState();
+        m_currentState.Entering();
     }
 
     // Use this for pre-initialization

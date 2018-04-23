@@ -6,7 +6,7 @@ public class FormationState
     /// <summary>
     /// The formation placement objects to display in the 3D scene ( object-pooling ).
     /// </summary>
-    private static GameObject[] PlacementObjects;
+    private static GameObject[] SlotObjects;
 
     public FormationState()
     {
@@ -25,9 +25,9 @@ public class FormationState
         var prefabManager = ValidityManager.FindManager<PrefabManager>();
 
         // create placement objects if required
-        if ( PlacementObjects == null )
+        if ( SlotObjects == null )
         {
-            PlacementObjects = new GameObject[ FormationParameters.FormationSlotCount ];
+            SlotObjects = new GameObject[ FormationParameters.FormationSlotCount ];
         }
 
         int centerX = ( FormationParameters.FormationSlotSizeX - 1 ) / 2;
@@ -43,9 +43,9 @@ public class FormationState
                 int index     = x + y * FormationParameters.FormationSlotSizeX;
 
                 // create placement objects if required
-                if (PlacementObjects[ index ] == null) { PlacementObjects[index] = prefabManager.GetFormationSlotPlacement(); }
+                if ( SlotObjects[ index ] == null ) { SlotObjects[index] = prefabManager.GetFormationSlotPlacement(); }
                 
-                var transform = PlacementObjects[ index ].GetComponent< Transform >();
+                var transform = SlotObjects[ index ].GetComponent< Transform >();
 
                 int offsetX   = x - centerX;
                 int offsetY   = y - centerY;
@@ -67,7 +67,7 @@ public class FormationState
     public override void Exiting()
     {
         // disable placement objects after state exits to remove unnecessary overhead.
-        foreach (var @object in PlacementObjects)
+        foreach (var @object in SlotObjects)
         {
             @object.SetActive( false );
         }
