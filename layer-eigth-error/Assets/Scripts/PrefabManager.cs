@@ -25,7 +25,7 @@ public class PrefabManager
 
     public void Awake ()
     {
-        if ( m_formationSlot == null ) { throw new RuntimeException( "Prefab: Formation Slot is null." );}
-        if ( m_formationFreeFighterUnitCounter == null ) { throw new RuntimeException( "Prefab: Formation Slot is null." );}
+        //if ( m_formationSlot == null ) { throw new RuntimeException( "Prefab: Formation Slot is null." );}
+        //if ( m_formationFreeFighterUnitCounter == null ) { throw new RuntimeException( "Prefab: Formation Slot is null." );}
     }
 }
