@@ -9,7 +9,7 @@ public class IdleState
 
     public override void Update()
     {
-        var gameStateManager = ValidityManager.FindManagerObjectByTag< GameStateManager >();
+        var gameStateManager = ValidityManager.FindManager< GameStateManager >();
 
         // Check if the player activated the formation state.
         if ( Input.GetButtonDown( AxisName.OpenFormationEditor ) == true )

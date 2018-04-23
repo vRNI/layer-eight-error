@@ -18,7 +18,7 @@ public static class ValidityManager
     /// More than one manager node exists in the scene, or the manager to search for does not exist.
     /// </exception>
     [ NotNull ]
-    public static TManager FindManagerObjectByTag< TManager > ()
+    public static TManager FindManager< TManager > ()
         where TManager : MonoBehaviour
     {
         var managerNodes = GameObject.FindGameObjectsWithTag( TagName.ManagerNode );
