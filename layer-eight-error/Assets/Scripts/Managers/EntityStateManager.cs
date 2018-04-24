@@ -40,7 +40,15 @@ public class EntityStateManager
     {
         m_entity = a_entity;
     }
-    
+
+    public bool IsCurrentState<TState>()
+        where TState : EntityState, new()
+    {
+        if (m_currentState == null)
+            return false;
+        return m_currentState.GetType() == typeof(TState);
+    }
+
     private void Update()
     {
         if ( m_currentState != null ) { m_currentState.Update(); }
