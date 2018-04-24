@@ -11,7 +11,8 @@ public class CameraOrbitScript : MonoBehaviour {
     private Transform m_cameraTransform;
     private Transform m_parentTransform;
 
-    private Vector3 m_localRotation;
+    [ SerializeField ] // only for debugging without mouse input in VM
+    private Vector3 m_localRotation = new Vector3( 0.0f, 45.0f, 0.0f );
     private float m_distanceToCamera = 10f;
 
     [SerializeField]
@@ -26,22 +27,22 @@ public class CameraOrbitScript : MonoBehaviour {
     [SerializeField]
     float m_scrollFactor;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         m_cameraTransform = transform;
         m_parentTransform = transform.parent;
     }
-	
-	// Update is called once per frame
+    
+    // Update is called once per frame
     // Late Update is called after everything update related has been finished -> perfect for camera adjustments
-	void LateUpdate () {
+    void LateUpdate () {
         if (enabled)
         {
             ComputeMouseInputAxes();
             ComputeMouseInputWheel();
             TransformCamera();
         }
-	}
+    }
 
     void ComputeMouseInputAxes()
     {
