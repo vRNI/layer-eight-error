@@ -13,7 +13,7 @@ public class CameraFollowPlayer
 
     private void Update ()
     {
-        var targetPosition = Finder.GetPlayerCurrentPosition();
+        var targetPosition = Finder.GetCurrentPosition( Finder.GetPlayer() );
         var targetRotation = m_transform.rotation;
 
         m_transform.SetPositionAndRotation( targetPosition, targetRotation );

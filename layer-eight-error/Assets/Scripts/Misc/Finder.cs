@@ -16,10 +16,10 @@ public static class Finder
     /// <summary>
     /// Gets the one and only formation configuration.
     /// </summary>
-    public static FormationConfiguration GetFormationConfiguration()
-    {
-        return Object.FindObjectOfType< FormationConfiguration >();
-    }
+    //public static FormationConfiguration GetFormationConfiguration()
+    //{
+    //    return Object.FindObjectOfType< FormationConfiguration >();
+    //}
     
     /// <summary>
     /// Gets the one and only ortho perspective changer.
@@ -30,19 +30,30 @@ public static class Finder
     }
 
     /// <summary>
-    /// Gets the player position.
+    /// Gets the formation leaders current position.
     /// </summary>
-    public static Vector3 GetPlayerCurrentPosition()
+    /// <param name="a_formationLeader">
+    /// The formation leader to follow.
+    /// </param>
+    public static Vector3 GetCurrentPosition( GameObject a_formationLeader )
     {
-        return GameObject.FindGameObjectWithTag( TagName.Player ).GetComponent< Transform >().position;
-    }
+        if ( a_formationLeader == null ) { return Vector3.zero; }
 
+        return a_formationLeader.GetComponent< Transform >().position;
+    }
+    
     /// <summary>
-    /// Gets the players desired position.
+    /// Gets the formation leaders desired position.
     /// </summary>
-    public static Vector3 GetPlayerDesiredPosition()
+    /// <param name="a_formationLeader">
+    /// The formation leader to follow.
+    /// </param>
+    public static Vector3 GetDesiredPosition( GameObject a_formationLeader )
     {
-        return GameObject.FindGameObjectWithTag( TagName.Player ).GetComponent< PlayerMouseController >().GetDesiredPosition();
+        if ( a_formationLeader == null ) { return Vector3.zero; }
+        if ( a_formationLeader.CompareTag( TagName.Player ) == true ) { return a_formationLeader.GetComponent< PlayerMouseController >().GetDesiredPosition(); }
+
+        return a_formationLeader.GetComponent< Transform >().position;
     }
 
     /// <summary>

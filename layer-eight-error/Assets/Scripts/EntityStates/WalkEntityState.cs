@@ -9,7 +9,7 @@ public class WalkEntityState
         base.Update();
         
         var formationSlot          = m_entity.GetFormationSlot();
-        var formationConfiguration = Finder.GetFormationConfiguration();
+        var formationConfiguration = m_entity.GetFormationConfiguration();
 
         if ( formationConfiguration.IsValid( formationSlot ) )
         {
