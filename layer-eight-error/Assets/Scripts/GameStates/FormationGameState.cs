@@ -8,6 +8,7 @@ public class FormationGameState
     {
         base.Enter();
 
+        Finder.GetCameraOrbitScript().Enabled = false;
         Finder.GetOrthoPerspectiveSwitcher().SwitchToOrtho();
     }
 
@@ -26,6 +27,7 @@ public class FormationGameState
     public override void Exit()
     {
         Finder.GetOrthoPerspectiveSwitcher().SwitchToPerspective();
+        Finder.GetCameraOrbitScript().Enabled = true;
 
         base.Exit();
     }

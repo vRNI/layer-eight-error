@@ -22,6 +22,14 @@ public static class Finder
     }
 
     /// <summary>
+    /// Gets the one and only camera orbit script.
+    /// </summary>
+    public static CameraOrbitScript GetCameraOrbitScript()
+    {
+        return Camera.main.GetComponent< CameraOrbitScript >();
+    }
+
+    /// <summary>
     /// Gets the formation leaders current position.
     /// </summary>
     /// <param name="a_formationLeader">
