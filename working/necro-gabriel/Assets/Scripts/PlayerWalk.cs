@@ -23,5 +23,7 @@ public class PlayerWalk : MonoBehaviour {
                 navMeshAgent.SetDestination(hitInformation.point);
             }
         }
+
+        Debug.DrawLine(transform.position, transform.position + transform.forward * 100f, Color.red);
 	}
 }
