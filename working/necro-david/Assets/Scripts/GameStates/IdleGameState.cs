@@ -1,27 +1,20 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 
-public class IdleState 
+public class IdleGameState
     : GameState
 {
-    public IdleState()
-    {
-    }
-
     public override void Update()
     {
-        var gameStateManager = ValidityManager.FindManager< GameStateManager >();
+        base.Update();
 
-        // Check if the player activated the formation state.
-        if ( Input.GetButtonDown( AxisName.OpenFormationEditor ) == true )
+        var gameStateManager = Finder.GetGameStateManager();
+
+        // check if the player activated the formation state
+        if ( Input.GetButtonDown( AxisName.ToggleFormationMode ) == true )
         {
-            gameStateManager.SetCurrentState< FormationState >();
+            gameStateManager.SetCurrentState< FormationGameState >();
             return;
-        }
-
-        // Check if enemies are near enough to trigger the battle state.
-        if ( false )
-        {
-            gameStateManager.SetCurrentState< BattleState >();
         }
     }
 }

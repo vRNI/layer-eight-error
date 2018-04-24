@@ -2,6 +2,11 @@
 using System.Collections;
 using UnityEngine;
 
+// todo. make ortho top-down view, restore original perspective view
+
+/// <summary>
+/// Switches camera projection between orthographic and perspective.
+/// </summary>
 [ RequireComponent( typeof( Camera ) ) ]
 public class OrthoPerspectiveSwitcher
     : MonoBehaviour
@@ -37,6 +42,7 @@ public class OrthoPerspectiveSwitcher
  
     private void Update()
     {
+        // check if state has changed, update matrix accordingly
         switch ( m_nextState )
         {
             case NextSwitcherState.None:
@@ -51,6 +57,7 @@ public class OrthoPerspectiveSwitcher
                 throw new ArgumentOutOfRangeException();
         }
 
+        // after starting co-routine wait until next state change is requested
         m_nextState = NextSwitcherState.None;
     }
  
@@ -85,11 +92,17 @@ public class OrthoPerspectiveSwitcher
         return StartCoroutine( LerpFromTo( gameObject.GetComponent< Camera >().projectionMatrix, a_targetMatrix, a_duration ) );
     }
 
+    /// <summary>
+    /// Tells the camera to switch to perspective view.
+    /// </summary>
     public void SwitchToPerspective()
     {
         m_nextState = NextSwitcherState.Perspective;
     }
-
+    
+    /// <summary>
+    /// Tells the camera to switch to orthographic view.
+    /// </summary>
     public void SwitchToOrtho()
     {
         m_nextState = NextSwitcherState.Ortho;

@@ -1,14 +1,15 @@
-﻿using UnityEngine;
-
+﻿
 public abstract class GameState
 {
-    public virtual void Entering()
+    public virtual void Enter()
     {
     }
 
-    public abstract void Update();
+    public virtual void Update()
+    {
+    }
 
-    public virtual void Exiting()
+    public virtual void Exit()
     {
     }
 }
