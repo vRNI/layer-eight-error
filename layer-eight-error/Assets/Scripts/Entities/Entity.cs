@@ -75,4 +75,12 @@ public /*abstract*/ class Entity // make entity class abstract and add fighter a
         
         return a_vector;
     }
+
+    public bool IsFriendly()
+    {
+        if (m_formationLeader != null)
+            return m_formationLeader.CompareTag(TagName.Player);
+
+        throw new System.InvalidOperationException("m_formationLeader is not assigned.");
+    }
 }

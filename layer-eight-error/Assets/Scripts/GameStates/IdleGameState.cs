@@ -1,9 +1,27 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class IdleGameState
     : GameState
 {
+    UnityAction listener;
+
+    public IdleGameState()
+    {
+        listener = new UnityAction(TriggerTransition<BattleGameState>);
+    }
+
+    public override void Enter()
+    {
+        EventManager.StartListening("TransitionBattleState", listener);
+    }
+
+    public override void Exit()
+    {
+        EventManager.StopListening("TransitionBattleState", listener);
+    }
+
     public override void Update()
     {
         base.Update();
@@ -11,9 +29,9 @@ public class IdleGameState
         var gameStateManager = Finder.GetGameStateManager();
 
         // check if the player activated the formation state
-        if ( Input.GetButtonDown( AxisName.ToggleFormationMode ) == true )
+        if (Input.GetButtonDown(AxisName.ToggleFormationMode) == true)
         {
-            gameStateManager.SetCurrentState< FormationGameState >();
+            gameStateManager.SetCurrentState<FormationGameState>();
             return;
         }
     }
