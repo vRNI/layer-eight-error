@@ -14,6 +14,14 @@ public static class Finder
     }
     
     /// <summary>
+    /// Gets the one and only prefabs manager.
+    /// </summary>
+    public static PrefabsManager GetPrefabs()
+    {
+        return Object.FindObjectOfType< PrefabsManager >();
+    }
+
+    /// <summary>
     /// Gets the one and only ortho perspective changer.
     /// </summary>
     public static OrthoPerspectiveSwitcher GetOrthoPerspectiveSwitcher()

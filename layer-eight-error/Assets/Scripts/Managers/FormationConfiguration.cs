@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Defines formation specific settings.
@@ -89,5 +90,22 @@ public class FormationConfiguration
         if (a_position.Z < -(m_gridSize.Z - 1) / 2 || a_position.Z > (m_gridSize.Z - 1) / 2) return false;
 
         return true;
+    }
+
+    /// <summary>
+    /// Enumerates the grid slot positions.
+    /// </summary>
+    public IEnumerable<Position2> EnumerateSlotPosition()
+    {
+        for ( int x = 0; x < m_gridSize.X; ++x )
+        {
+            for ( int z = 0; z < m_gridSize.Z; ++z )
+            {
+                int slotX = x - ( m_gridSize.X - 1 ) / 2;
+                int slotZ = z - ( m_gridSize.Z - 1 ) / 2;
+
+                yield return new Position2( slotX, slotZ );
+            }
+        }
     }
 }
