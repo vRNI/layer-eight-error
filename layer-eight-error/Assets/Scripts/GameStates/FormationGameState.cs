@@ -1,4 +1,5 @@
 ﻿
+using System.Linq;
 using UnityEngine;
 
 public class FormationGameState
@@ -14,14 +15,18 @@ public class FormationGameState
         var cameraOrbitScript   = Finder.GetCameraOrbitScript();
         m_originalOrbitRotation = cameraOrbitScript.LocalRotation;
         
-        cameraOrbitScript.LocalRotation      = new Vector3( m_originalOrbitRotation.x, 90.0f, m_originalOrbitRotation.z );
+        var player                 = Finder.GetPlayer();
+        var playerTransform        = player.GetComponent< Transform >();
+        var playerPosition         = playerTransform.position;
+        var playerEulerAngles      = playerTransform.eulerAngles;
+
+        cameraOrbitScript.LocalRotation      = new Vector3( playerEulerAngles.y, 90.0f, m_originalOrbitRotation.z );
         cameraOrbitScript.AreControlsEnabled = false;
         Finder.GetOrthoPerspectiveSwitcher().SwitchToOrtho();
 
-        var player                 = Finder.GetPlayer();
-        var playerPosition         = player.GetComponent< Transform >().position;
-        var playerRotationY        = player.GetComponent< Transform >().eulerAngles.y;
+        var playerRotationY        = playerEulerAngles.y;
         var formationConfiguration = player.GetComponent< FormationConfiguration >();
+        var entities               = formationConfiguration.GetUnderlingEntities();
         var prefabsManager         = Finder.GetPrefabs();
 
         m_gridSlotObjects = new GameObject[ formationConfiguration.GetSlotCount() ];
@@ -39,6 +44,19 @@ public class FormationGameState
             m_gridSlotObjects[ index ].GetComponent< Transform >().position   = targetPosition;
             m_gridSlotObjects[ index ].GetComponent< Transform >().localScale = new Vector3( 0.3f, 0.3f, 0.3f );
         }
+
+        foreach ( var entity in entities )
+        {
+            var slotPosition   = entity.GetFormationSlot();
+            var gridSlotObject = m_gridSlotObjects.SingleOrDefault( a_x => AreEqual( a_x.GetComponent< FormationEditorDragDropTarget >().SlotPosition, slotPosition ) );
+            if ( gridSlotObject == null ) { continue; }
+            gridSlotObject.SetActive( false );
+        }
+    }
+
+    private bool AreEqual( Position2 a_one, Position2 a_other )
+    {
+        return a_one.X == a_other.X && a_one.Z == a_other.Z;
     }
 
     public override void Update()

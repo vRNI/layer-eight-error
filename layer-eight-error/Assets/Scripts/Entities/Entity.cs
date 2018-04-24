@@ -21,6 +21,9 @@ public /*abstract*/ class Entity // make entity class abstract and add fighter a
         m_entityStateManager = gameObject.GetComponent< EntityStateManager >();
         m_entityStateManager.SetEntity( this );
         m_entityStateManager.SetCurrentState< IdleEntityState >();
+        
+        if ( m_formationLeader == null ) { return; }
+        GetFormationConfiguration().AddUnderlingEntity( this );
     }
     
     public virtual void SetCurrentState< TState >()

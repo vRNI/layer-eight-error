@@ -579,7 +579,7 @@ MonoBehaviour:
   m_sensitivityX: 5
   m_sensitivityY: 5
   m_sensitivityScroll: 5
-  m_orbitSpeedDampening: 100
+  m_orbitSpeedDampening: 3
   m_scrollSpeedDampening: 6
   m_minCameraDistance: 5
   m_maxCameraDistance: 100

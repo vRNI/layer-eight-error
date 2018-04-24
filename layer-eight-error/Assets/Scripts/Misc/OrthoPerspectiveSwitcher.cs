@@ -44,12 +44,11 @@ public class OrthoPerspectiveSwitcher
     {
         var player                 = Finder.GetPlayer();
         var formationConfiguration = player.GetComponent< FormationConfiguration >();
-        // take 1.5 times of grid dimensions to extend view correctly
-        var gridWidth              = formationConfiguration.GetSlotDistance().x * ( formationConfiguration.GetGridSize().X * 1.5f );
-        var gridHeight             = formationConfiguration.GetSlotDistance().y * ( formationConfiguration.GetGridSize().Z * 1.5f );
 
-        // take only half of grid size because of Matrix4x4.Ortho( -orthographicSize * aspect, orthographicSize * aspect, -orthographicSize, orthographicSize, near, far );
-        orthographicSize = Mathf.Max( gridHeight / 2.0f, gridWidth / 2.0f );
+        var gridWidth              = formationConfiguration.GetSlotDistance().x * formationConfiguration.GetGridSize().X;
+        var gridHeight             = formationConfiguration.GetSlotDistance().y * formationConfiguration.GetGridSize().Z;
+
+        orthographicSize = Mathf.Max( gridHeight, gridWidth );
     }
 
     private void Update()

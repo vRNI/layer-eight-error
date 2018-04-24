@@ -108,4 +108,28 @@ public class FormationConfiguration
             }
         }
     }
+
+    /// <summary>
+    /// Contains all entities this formation contains.
+    /// </summary>
+    private List< Entity > m_entities = new List< Entity >();
+
+    /// <summary>
+    /// Adds an entity to the formation.
+    /// </summary>
+    /// <param name="a_entity">
+    /// The entity.
+    /// </param>
+    public void AddUnderlingEntity( Entity a_entity )
+    {
+        m_entities.Add( a_entity );
+    }
+
+    /// <summary>
+    /// Gets all entities.
+    /// </summary>
+    public Entity[] GetUnderlingEntities()
+    {
+        return m_entities.ToArray();
+    }
 }
