@@ -14,14 +14,6 @@ public static class Finder
     }
     
     /// <summary>
-    /// Gets the one and only formation configuration.
-    /// </summary>
-    //public static FormationConfiguration GetFormationConfiguration()
-    //{
-    //    return Object.FindObjectOfType< FormationConfiguration >();
-    //}
-    
-    /// <summary>
     /// Gets the one and only ortho perspective changer.
     /// </summary>
     public static OrthoPerspectiveSwitcher GetOrthoPerspectiveSwitcher()
