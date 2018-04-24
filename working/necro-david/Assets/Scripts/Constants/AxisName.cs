@@ -1,5 +1,8 @@
 ﻿
+/// <summary>
+/// Declares used axis names.
+/// </summary>
 public static class AxisName
 {
-    public const string OpenFormationEditor = "OpenFormationEditor";
+    public const string ToggleFormationMode = "ToggleFormationMode";
 }

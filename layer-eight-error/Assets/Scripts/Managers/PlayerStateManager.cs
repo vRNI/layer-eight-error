@@ -24,6 +24,7 @@ public class PlayerStateManager
     {
         m_currentState.Exit();;
         m_currentState = new TState();
+        m_currentState.SetPlayer( Finder.GetPlayer() );
         m_currentState.Enter();
     }
 
@@ -31,6 +32,7 @@ public class PlayerStateManager
     {
         // Idle state by default.
         m_currentState = new IdlePlayerState();
+        m_currentState.SetPlayer( Finder.GetPlayer() );
         m_currentState.Enter();
     }
     
