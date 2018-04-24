@@ -30,14 +30,22 @@ public class EntityStateManager
         m_currentState.SetEntity( m_entity );
         m_currentState.Enter();
     }
-    
+
+    public bool IsCurrentState<TState>()
+        where TState : EntityState, new()
+    {
+        if (m_currentState == null)
+            return false;
+        return m_currentState.GetType()==typeof(TState);
+    }
+
     /// <summary>
-    /// Sets the entity this state manager belongs to.
-    /// </summary>
-    /// <param name="a_entity">
-    /// The entity this state manager belongs to.
-    /// </param>
-    public void SetEntity( Entity a_entity )
+        /// Sets the entity this state manager belongs to.
+        /// </summary>
+        /// <param name="a_entity">
+        /// The entity this state manager belongs to.
+        /// </param>
+        public void SetEntity( Entity a_entity )
     {
         m_entity = a_entity;
     }

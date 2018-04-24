@@ -12,7 +12,7 @@ public class PlayerMouseController
 
     private void Start()
     {
-        m_desiredPosition = Finder.GetPlayerCurrentPosition();
+        m_desiredPosition = Finder.GetCurrentPosition( Finder.GetPlayer() );
     }
 
     private void Update () 

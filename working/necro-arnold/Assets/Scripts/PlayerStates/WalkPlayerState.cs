@@ -16,10 +16,10 @@ public class WalkPlayerState
     {
         base.Update();
 
-        var formationConfiguration = Finder.GetFormationConfiguration();
+        var formationConfiguration = m_player.GetComponent< FormationConfiguration >();
 
-        var currentPosition = Finder.GetPlayerCurrentPosition();
-        var desiredPosition = Finder.GetPlayerDesiredPosition();
+        var currentPosition = Finder.GetCurrentPosition( m_player );
+        var desiredPosition = Finder.GetDesiredPosition( m_player );
 
         // if desired player position is far enough away from current position start walking
         if ( Vector3.Distance( currentPosition, desiredPosition ) > formationConfiguration.GetFollowThreshold() )

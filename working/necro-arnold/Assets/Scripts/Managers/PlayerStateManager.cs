@@ -15,25 +15,27 @@ public class PlayerStateManager
     {
         return m_currentState;
     }
-    
+
     /// <summary>
     /// Sets the currently active player state.
     /// </summary>
-    public void SetCurrentState< TState >()
+    public void SetCurrentState<TState>()
         where TState : PlayerState, new()
     {
-        m_currentState.Exit();;
+        m_currentState.Exit(); ;
         m_currentState = new TState();
+        m_currentState.SetPlayer(Finder.GetPlayer());
         m_currentState.Enter();
     }
 
-    private void Start ()
+    private void Start()
     {
         // Idle state by default.
         m_currentState = new IdlePlayerState();
+        m_currentState.SetPlayer(Finder.GetPlayer());
         m_currentState.Enter();
     }
-    
+
     private void Update ()
     {
         m_currentState.Update();

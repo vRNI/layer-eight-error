@@ -3,13 +3,13 @@
 /// <summary>
 /// Defines formation specific settings.
 /// </summary>
-[ DisallowMultipleComponent ]
+[DisallowMultipleComponent]
 public class FormationConfiguration
     : MonoBehaviour
 {
-    [ Tooltip( "Defines the formation grid size in slots." ) ]
-    [ SerializeField ]
-    private Position2 m_gridSize = new Position2( 9, 9 );
+    [Tooltip("Defines the formation grid size in slots.")]
+    [SerializeField]
+    private Position2 m_gridSize = new Position2(9, 9);
 
     /// <summary>
     /// Gets the formation grid size in slots.
@@ -27,9 +27,9 @@ public class FormationConfiguration
         return m_gridSize.X * m_gridSize.Z;
     }
 
-    [ Tooltip( "Defines the distance in world units between two formation slots." ) ]
-    [ SerializeField ]
-    private Vector2 m_slotDistance = new Vector2( 2.0f, 2.0f );
+    [Tooltip("Defines the distance in world units between two formation slots.")]
+    [SerializeField]
+    private Vector2 m_slotDistance = new Vector2(2.0f, 2.0f);
 
     /// <summary>
     /// Gets the distance in world units between two formation slots.
@@ -45,16 +45,16 @@ public class FormationConfiguration
     /// <param name="a_position">
     /// Position within the formation grid.
     /// </param>
-    public Vector3 GetSlotOffset( Position2 a_position )
+    public Vector3 GetSlotOffset(Position2 a_position)
     {
-        if ( IsValid( a_position ) ) { return new Vector3( m_slotDistance.x * a_position.X, 0.0f, m_slotDistance.y * a_position.Z ); }
-        
+        if (IsValid(a_position)) { return new Vector3(m_slotDistance.x * a_position.X, 0.0f, m_slotDistance.y * a_position.Z); }
+
         // if invalid return zero vector
         return Vector3.zero;
     }
 
-    [ Tooltip( "Defines the threshold in world units which triggers units to follow their formation slots." ) ]
-    [ SerializeField ]
+    [Tooltip("Defines the threshold in world units which triggers units to follow their formation slots.")]
+    [SerializeField]
     private float m_followThreshold = 0.2f;
 
     /// <summary>
@@ -65,16 +65,28 @@ public class FormationConfiguration
         return m_followThreshold;
     }
 
+    [Tooltip("Defines the max distance followed positions should be away.")]
+    [SerializeField]
+    private float m_followMaxDistance = 2.0f;
+
+    /// <summary>
+    /// Gets the max distance followed positions should be away.
+    /// </summary>
+    public float GetFollowMaxDistance()
+    {
+        return m_followMaxDistance;
+    }
+
     /// <summary>
     /// Checks if a formation slot is valid.
     /// </summary>
     /// <param name="a_position">
     /// The formation slot to check.
     /// </param>
-    public bool IsValid( Position2 a_position )
+    public bool IsValid(Position2 a_position)
     {
-        if ( a_position.X < -( m_gridSize.X - 1 ) / 2 || a_position.X > ( m_gridSize.X - 1 ) / 2 ) return false;
-        if ( a_position.Z < -( m_gridSize.Z - 1 ) / 2 || a_position.Z > ( m_gridSize.Z - 1 ) / 2 ) return false;
+        if (a_position.X < -(m_gridSize.X - 1) / 2 || a_position.X > (m_gridSize.X - 1) / 2) return false;
+        if (a_position.Z < -(m_gridSize.Z - 1) / 2 || a_position.Z > (m_gridSize.Z - 1) / 2) return false;
 
         return true;
     }
