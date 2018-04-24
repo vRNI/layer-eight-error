@@ -6,11 +6,19 @@ public class CameraOrbitScript : MonoBehaviour {
 
     public bool Enabled { get { return enabled; } set { enabled = value; } }
 
+    [ SerializeField ]
+    private bool m_areControlsEnabled = false;
+
+    public bool AreControlsEnabled { get { return m_areControlsEnabled; } set { m_areControlsEnabled = value; } }
+
     private Transform m_cameraTransform;
     private Transform m_parentTransform;
 
     [ SerializeField ] // only for debugging without mouse input in VM
     private Vector3 m_localRotation = new Vector3( 0.0f, 45.0f, 0.0f );
+
+    public Vector3 LocalRotation { get { return m_localRotation; } set { m_localRotation = value; } }
+
     private float m_distanceToCamera = 10f;
 
     [SerializeField]
@@ -36,8 +44,11 @@ public class CameraOrbitScript : MonoBehaviour {
     void LateUpdate () {
         if (enabled)
         {
-            ComputeMouseInputAxes();
-            ComputeMouseInputWheel();
+            if ( m_areControlsEnabled )
+            {
+                ComputeMouseInputAxes();
+                ComputeMouseInputWheel();
+            }
             TransformCamera();
         }
     }

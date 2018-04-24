@@ -4,11 +4,17 @@ using UnityEngine;
 public class FormationGameState
     : GameState
 {
+    private Vector3 m_originalOrbitRotation;
+
     public override void Enter()
     {
         base.Enter();
 
-        Finder.GetCameraOrbitScript().Enabled = false;
+        var cameraOrbitScript   = Finder.GetCameraOrbitScript();
+        m_originalOrbitRotation = cameraOrbitScript.LocalRotation;
+        
+        cameraOrbitScript.LocalRotation      = new Vector3( m_originalOrbitRotation.x, 90.0f, m_originalOrbitRotation.z );
+        cameraOrbitScript.AreControlsEnabled = false;
         Finder.GetOrthoPerspectiveSwitcher().SwitchToOrtho();
     }
 
@@ -26,8 +32,11 @@ public class FormationGameState
 
     public override void Exit()
     {
+        var cameraOrbitScript = Finder.GetCameraOrbitScript();
+
         Finder.GetOrthoPerspectiveSwitcher().SwitchToPerspective();
-        Finder.GetCameraOrbitScript().Enabled = true;
+        cameraOrbitScript.AreControlsEnabled = true;
+        cameraOrbitScript.LocalRotation      = m_originalOrbitRotation;
 
         base.Exit();
     }
