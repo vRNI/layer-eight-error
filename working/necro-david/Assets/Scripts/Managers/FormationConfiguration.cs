@@ -65,6 +65,18 @@ public class FormationConfiguration
         return m_followThreshold;
     }
 
+    [ Tooltip( "Defines the max distance followed positions should be away." ) ]
+    [ SerializeField ]
+    private float m_followMaxDistance = 2.0f;
+
+    /// <summary>
+    /// Gets the max distance followed positions should be away.
+    /// </summary>
+    public float GetFollowMaxDistance()
+    {
+        return m_followMaxDistance;
+    }
+
     /// <summary>
     /// Checks if a formation slot is valid.
     /// </summary>

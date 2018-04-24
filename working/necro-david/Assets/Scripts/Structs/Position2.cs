@@ -3,6 +3,8 @@
 [ Serializable ]
 public struct Position2
 {
+    public static readonly Position2 Invalid = new Position2( int.MinValue, int.MinValue );
+
     public int X;
     public int Z;
 

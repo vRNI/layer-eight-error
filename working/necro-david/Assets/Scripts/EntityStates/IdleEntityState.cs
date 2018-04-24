@@ -8,7 +8,7 @@ public class IdleEntityState
         base.Update();
         
         var formationSlot          = m_entity.GetFormationSlot();
-        var formationConfiguration = Finder.GetFormationConfiguration();
+        var formationConfiguration = m_entity.GetFormationConfiguration();
 
         // check if entity is in formation
         if ( formationConfiguration.IsValid( formationSlot ) )
