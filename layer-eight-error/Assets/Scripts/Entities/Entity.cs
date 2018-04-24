@@ -35,7 +35,7 @@ public /*abstract*/ class Entity // make entity class abstract and add fighter a
     public Vector3 GetFormationSlotWorldPosition()
     {
         var formationConfiguration = Finder.GetFormationConfiguration();
-        var playerPosition         = Finder.GetPlayerCurrentPosition();
+        var playerPosition         = Finder.GetPlayerDesiredPosition();
 
         return playerPosition + formationConfiguration.GetSlotOffset( m_formationSlot );
     }
