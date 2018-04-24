@@ -27,7 +27,7 @@ public class OrthoPerspectiveSwitcher
     private float near             =    0.3f;
     [ SerializeField ]
     private float far              = 1000.0f;
-    [ SerializeField ]
+    //[ SerializeField ]
     private float orthographicSize =   10.0f;
  
     private NextSwitcherState m_nextState = NextSwitcherState.Perspective;
@@ -40,6 +40,18 @@ public class OrthoPerspectiveSwitcher
         m_ortho       = Matrix4x4.Ortho( -orthographicSize * aspect, orthographicSize * aspect, -orthographicSize, orthographicSize, near, far );
     }
  
+    private void Start()
+    {
+        var player                 = Finder.GetPlayer();
+        var formationConfiguration = player.GetComponent< FormationConfiguration >();
+        // take 1.5 times of grid dimensions to extend view correctly
+        var gridWidth              = formationConfiguration.GetSlotDistance().x * ( formationConfiguration.GetGridSize().X * 1.5f );
+        var gridHeight             = formationConfiguration.GetSlotDistance().y * ( formationConfiguration.GetGridSize().Z * 1.5f );
+
+        // take only half of grid size because of Matrix4x4.Ortho( -orthographicSize * aspect, orthographicSize * aspect, -orthographicSize, orthographicSize, near, far );
+        orthographicSize = Mathf.Max( gridHeight / 2.0f, gridWidth / 2.0f );
+    }
+
     private void Update()
     {
         // check if state has changed, update matrix accordingly
