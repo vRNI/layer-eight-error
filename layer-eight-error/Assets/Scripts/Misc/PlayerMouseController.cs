@@ -17,6 +17,7 @@ public class PlayerMouseController
 
     private void Update () 
     {
+        if ( Finder.GetGameStateManager().IsCurrentState< FormationGameState >() ) { return; }
         if ( Input.GetMouseButtonUp( MouseButtonIndex.Left ) )
         {
             // cast ray against scene

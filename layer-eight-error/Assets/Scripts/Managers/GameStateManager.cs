@@ -27,6 +27,13 @@ public class GameStateManager
         m_currentState.Enter();
     }
 
+    public bool IsCurrentState< TState >()
+        where TState : GameState, new()
+    {
+        if ( m_currentState == null ) { return false; }
+        return m_currentState.GetType() == typeof( TState );
+    }
+
     private void Start ()
     {
         // Idle state by default.

@@ -15,12 +15,10 @@ public class FormationGameState
     {
         base.Update();
 
-        var gameStateManager = Finder.GetGameStateManager();
-
         // check if the player activated the idle state
         if ( Input.GetButtonDown( AxisName.ToggleFormationMode ) == true )
         {
-            gameStateManager.SetCurrentState< IdleGameState >();
+            TriggerTransition< IdleGameState >();
             return;
         }
     }

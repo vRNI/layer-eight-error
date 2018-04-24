@@ -15,6 +15,8 @@ public class IdlePlayerState
     {
         base.Update();
 
+        if ( Finder.GetGameStateManager().IsCurrentState< FormationGameState >() ) { return; }
+
         var formationConfiguration = m_player.GetComponent< FormationConfiguration >();
 
         var currentPosition = Finder.GetCurrentPosition( m_player );

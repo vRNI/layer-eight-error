@@ -68,6 +68,11 @@ public /*abstract*/ class Entity // make entity class abstract and add fighter a
         m_navMeshAgent.SetDestination( target );
     }
 
+    public void StopWalking()
+    {
+        m_navMeshAgent.SetDestination( Finder.GetCurrentPosition( gameObject ) );
+    }
+
     private static Vector3 ClampToMaxDistance( Vector3 a_vector, float a_maxDistance )
     {
         var length = Vector3.Distance( a_vector, Vector3.zero );

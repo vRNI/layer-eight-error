@@ -7,6 +7,8 @@ public class IdleEntityState
     {
         base.Update();
         
+        if ( Finder.GetGameStateManager().IsCurrentState< FormationGameState >() ) { return; }
+
         var formationSlot          = m_entity.GetFormationSlot();
         var formationConfiguration = m_entity.GetFormationConfiguration();
 
