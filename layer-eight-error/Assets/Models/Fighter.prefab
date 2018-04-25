@@ -180,6 +180,7 @@ MonoBehaviour:
   m_formationSlot:
     X: 0
     Z: 0
+  m_idleLookRotationSyncMaxDuration: 3
   m_formationLeader: {fileID: 0}
   m_entityType: 1
 --- !u!136 &136298754471510998
