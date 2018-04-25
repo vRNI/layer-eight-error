@@ -8,7 +8,7 @@ public class IdleEntityState
         base.Update();
         
         var formationSlot          = m_entity.GetFormationSlot();
-        var formationConfiguration = m_entity.GetFormationConfiguration();
+        var formationConfiguration = m_entity.GetLeader().GetComponent<LeaderEntity>().GetFormationConfiguration();
 
         // check if entity is in formation
         if ( formationConfiguration.IsValid( formationSlot ) )

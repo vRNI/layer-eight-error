@@ -19,7 +19,7 @@ public /*abstract*/ class Entity // make entity class abstract and add fighter a
     {
         m_navMeshAgent       = gameObject.GetComponent< NavMeshAgent >();
         m_entityStateManager = gameObject.GetComponent< EntityStateManager >();
-        m_entityStateManager.SetEntity( this );
+        //m_entityStateManager.SetEntity( this );
         m_entityStateManager.SetCurrentState< IdleEntityState >();
     }
     
@@ -86,16 +86,15 @@ public /*abstract*/ class Entity // make entity class abstract and add fighter a
 
     void Start()
     {
-        if (m_formationLeader != null)
-            AddUnderlingUnit();
+        //if (m_formationLeader != null)
+        //    AddUnderlingUnit();
 
-        if (m_formationLeader == null)
-            Debug.Log("this");
+        //if (m_formationLeader == null)
+        //    Debug.Log("this");
     }
 
-    public void AddUnderlingUnit()
-    {
-        m_formationLeader.GetComponent<FormationConfiguration>().AddUnderlingEntity(this);
-    }
-
+    //public void AddUnderlingUnit()
+    //{
+    //    m_formationLeader.GetComponent<FormationConfiguration>().AddUnderlingEntity(this);
+    //}
 }

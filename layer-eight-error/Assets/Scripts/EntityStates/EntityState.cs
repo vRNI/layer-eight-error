@@ -1,7 +1,7 @@
 ﻿
 public abstract class EntityState
 {
-    protected Entity m_entity;
+    protected UnderlingEntity m_entity;
 
     /// <summary>
     /// Sets the entity this state belongs to.
@@ -9,20 +9,23 @@ public abstract class EntityState
     /// <param name="a_entity">
     /// The entity this state belongs to.
     /// </param>
-    public void SetEntity( Entity a_entity )
+    public void SetEntity(UnderlingEntity a_entity)
     {
         m_entity = a_entity;
     }
 
     public virtual void Enter()
     {
+
     }
     
     public virtual void Update()
     {
+
     }
 
     public virtual void Exit()
     {
+
     }
 }

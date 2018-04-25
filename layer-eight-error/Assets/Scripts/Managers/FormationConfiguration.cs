@@ -11,7 +11,7 @@ public class FormationConfiguration
     [Tooltip("Defines the formation grid size in slots.")]
     [SerializeField]
     private Position2 m_gridSize = new Position2(9, 9);
-    private List<Entity> m_underlingUnits;
+    private List<UnderlingEntity> m_underlingUnits;
 
     /// <summary>
     /// Gets the formation grid size in slots.
@@ -93,7 +93,7 @@ public class FormationConfiguration
         return true;
     }
 
-    public void AddUnderlingEntity(Entity a)
+    public void AddUnderlingEntity(UnderlingEntity a)
     {
         if (m_underlingUnits != null)
         {
@@ -101,15 +101,13 @@ public class FormationConfiguration
         }
         else
         {
-            m_underlingUnits = new List<Entity>();
+            m_underlingUnits = new List<UnderlingEntity>();
             m_underlingUnits.Add(a);
         }
     }
 
-    public List<Entity> GetUnderlingUnits()
+    public List<UnderlingEntity> GetUnderlingUnits()
     {
         return m_underlingUnits;
     }
-
-
 }
