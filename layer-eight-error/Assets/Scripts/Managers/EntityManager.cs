@@ -5,8 +5,8 @@ using System.Linq;
 
 public class EntityManager : MonoBehaviour {
 
-    List<UnderlingEntity> underlingEntities;
-    List<UnderlingEntity> deadUnderlingEntities;
+    List<UnderlingEntity> underlingEntities = new List<UnderlingEntity>();
+    List<UnderlingEntity> deadUnderlingEntities = new List<UnderlingEntity>();
 
     private void Start()
     {
@@ -17,13 +17,7 @@ public class EntityManager : MonoBehaviour {
     {
         //
     }
-
-    private void Awake()
-    {
-        underlingEntities = new List<UnderlingEntity>();
-        deadUnderlingEntities = new List<UnderlingEntity>();
-    }
-
+    
     public void AddUnderling(UnderlingEntity a)
     {
         underlingEntities.Add(a);
