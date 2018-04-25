@@ -11,10 +11,10 @@ public class IdleEntityState
         
         if ( Finder.GetGameStateManager().IsCurrentState< FormationGameState >() ) { return; }
 
-        var formationLeader                 = m_entity.GetFormationLeader();
+        var formationLeader                 = m_entity.GetLeader();
         var leaderTransform                 = formationLeader.GetComponent< Transform >();
         var entityTransform                 = m_entity.GetComponent< Transform >();
-
+        
         var leaderEulerAngleY               = leaderTransform.eulerAngles.y;
         var entityEulerAngleY               = entityTransform.eulerAngles.y;
         var rotationOffset                  = Mathf.Abs( leaderEulerAngleY - entityEulerAngleY );
@@ -27,7 +27,7 @@ public class IdleEntityState
         var lookRotationNew = MathUtil.LerpQuaternion(entityTransform.rotation, leaderTransform.rotation, lerpScale);
 
         var formationSlot                   = m_entity.GetFormationSlot();
-        var formationConfiguration          = m_entity.GetFormationConfiguration();
+        var formationConfiguration          = m_entity.GetLeader().GetComponent<LeaderEntity>().GetFormationConfiguration();
         
         // check if entity is in formation
         if ( formationConfiguration.IsValid( formationSlot ) )

@@ -1,28 +1,6 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using UnityEngine.AI;
-
-public enum EntityType
-{
-    /// <summary>
-    /// Represents no specific entity.
-    /// </summary>
-    None,
-
-    /// <summary>
-    /// Represents the fighter entity.
-    /// </summary>
-    Fighter,
-
-    /// <summary>
-    /// Represents the ranger entity.
-    /// </summary>
-    Ranger,
-    
-    /// <summary>
-    /// Represents the mage entity.
-    /// </summary>
-    Mage,
-}
 
 [ RequireComponent( typeof( EntityStateManager ) ) ]
 [ RequireComponent( typeof( NavMeshAgent ) ) ]
@@ -33,30 +11,20 @@ public /*abstract*/ class Entity // make entity class abstract and add fighter a
     protected EntityState        m_currentState;
     [ SerializeField ] // replace this by formation editor
     protected Position2          m_formationSlot;
-    [ Tooltip( "The maximal duration it takes until the entity and formation leader look rotation are synced." ) ]
-    [ SerializeField ]
-    protected float              m_idleLookRotationSyncMaxDuration = 1.0f;
     [SerializeField] // replace this by resurrection spell ( before enemy, after player )
     protected GameObject m_formationLeader;
-    [ SerializeField ]
-    protected EntityType m_entityType;
     protected NavMeshAgent       m_navMeshAgent;
     protected EntityStateManager m_entityStateManager;
     
-    public /*abstract*/ EntityType GetEntityType()
-    {
-        return m_entityType; // move type to each explicit class
-    }
-
     public virtual void Awake()
     {
         m_navMeshAgent       = gameObject.GetComponent< NavMeshAgent >();
         m_entityStateManager = gameObject.GetComponent< EntityStateManager >();
-        m_entityStateManager.SetEntity( this );
+        //m_entityStateManager.SetEntity( this );
         m_entityStateManager.SetCurrentState< IdleEntityState >();
         
         if ( m_formationLeader == null ) { return; }
-        GetFormationConfiguration().AddUnderlingEntity( this );
+        //GetFormationConfiguration().AddUnderlingEntity( this );
     }
     
     public virtual void SetCurrentState< TState >()
@@ -73,11 +41,6 @@ public /*abstract*/ class Entity // make entity class abstract and add fighter a
     public void SetFormationSlot( Position2 a_value )
     {
         m_formationSlot = a_value;
-    }
-
-    public float GetIdleLookRotationSyncMaxDuration()
-    {
-        return m_idleLookRotationSyncMaxDuration;
     }
 
     public GameObject GetFormationLeader()
@@ -159,9 +122,8 @@ public /*abstract*/ class Entity // make entity class abstract and add fighter a
         throw new System.InvalidOperationException("m_formationLeader is not assigned.");
     }
     
-    public void AddUnderlingUnit()
-    {
-        m_formationLeader.GetComponent<FormationConfiguration>().AddUnderlingEntity(this);
-    }
-
+    //public void AddUnderlingUnit()
+    //{
+    //    m_formationLeader.GetComponent<FormationConfiguration>().AddUnderlingEntity(this);
+    //}
 }

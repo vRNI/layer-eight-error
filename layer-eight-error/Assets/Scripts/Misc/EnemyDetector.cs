@@ -17,6 +17,8 @@ public class EnemyDetector : MonoBehaviour
             if (!enemyDetected)
             {
                 EventManager.TriggerEvent("TransitionIdleState");
+                // change
+                Finder.GetPlayer().GetComponent<LeaderOverlord>().SetUnderlingsHostility(false);
             }
         }
         finally
@@ -27,10 +29,10 @@ public class EnemyDetector : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        var entity = other.gameObject.GetComponent<Entity>();
+        var entity = other.gameObject.GetComponent<LeaderEntity>();
         if (entity != null)
         {
-            if (!entity.IsFriendly())
+            if (other.gameObject != Finder.GetPlayer())
             {
                 enemyDetected = true;
             }
@@ -41,33 +43,20 @@ public class EnemyDetector : MonoBehaviour
     {
         var gameStateManager = Finder.GetGameStateManager();
 
-        var entity = other.gameObject.GetComponent<Entity>();
+        // Get Leader State Machine -> is not null;
+        var entity = other.gameObject.GetComponent<LeaderEntity>();
         if (entity != null)
         {
-            
-            if (!entity.IsFriendly())
+            if (other.gameObject != Finder.GetPlayer())
             {
                 if (gameStateManager.GetCurrentState().GetType() != typeof(BattleGameState))
                 {
-
                     EventManager.TriggerEvent("TransitionBattleState");
+                    Finder.GetPlayer().GetComponent<LeaderOverlord>().SetUnderlingsHostility(true);
                 }
 
-                if (entity.GetComponent<EntityStateManager>().IsCurrentState<WalkEntityState>()
-                    || entity.GetComponent<EntityStateManager>().IsCurrentState<IdleEntityState>())
-                {
-                    entity.GetComponent<EntityStateManager>().IsCurrentState<CombatEntityState>();
-                    // set unit state to battle
-                    var underlings = other.gameObject.GetComponent<FormationConfiguration>().GetUnderlingUnits();
-                    foreach (var underling in underlings)
-                    {
-                        if (underling.GetComponent<EntityStateManager>().IsCurrentState<WalkEntityState>()
-                            || underling.GetComponent<EntityStateManager>().IsCurrentState<IdleEntityState>())
-                        {
-                            underling.GetComponent<EntityStateManager>().SetCurrentState<CombatEntityState>();
-                        }
-                    }
-                }
+                if (!other.gameObject.GetComponent<LeaderEntity>().IsHostile)
+                    other.gameObject.GetComponent<LeaderEntity>().SetUnderlingsHostility(true);
 
                 enemyDetected = true;
             }

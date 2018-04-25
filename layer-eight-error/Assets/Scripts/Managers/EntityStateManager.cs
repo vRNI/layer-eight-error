@@ -6,7 +6,7 @@ public class EntityStateManager
     : MonoBehaviour
 {
     private EntityState m_currentState;
-    private Entity      m_entity;
+    private UnderlingEntity m_entity;
 
     /// <summary>
     /// Gets the currently active entity state.
@@ -36,7 +36,7 @@ public class EntityStateManager
     /// <param name="a_entity">
     /// The entity this state manager belongs to.
     /// </param>
-    public void SetEntity( Entity a_entity )
+    public void SetEntity(UnderlingEntity a_entity )
     {
         m_entity = a_entity;
     }

@@ -2,6 +2,13 @@
 
 public abstract class GameState
 {
+    protected GameObject m_gameObject;
+    public GameObject StateGameObject
+    {
+        get { return m_gameObject; }
+        set { m_gameObject = value; }
+    }
+
     public virtual void Enter()
     {
     }

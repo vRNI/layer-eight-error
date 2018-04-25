@@ -12,6 +12,11 @@ public static class Finder
     {
         return Object.FindObjectOfType< GameStateManager >();
     }
+
+    public static EntityManager GetEntityManager()
+    {
+        return Object.FindObjectOfType<EntityManager>();
+    }
     
     /// <summary>
     /// Gets the one and only prefabs manager.

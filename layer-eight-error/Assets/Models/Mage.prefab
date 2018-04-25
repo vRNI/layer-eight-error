@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 23034817447691724}
   - component: {fileID: 114132192551782970}
   - component: {fileID: 195702154637834632}
-  - component: {fileID: 114079347108171670}
+  - component: {fileID: 114573526952917338}
   m_Layer: 0
   m_Name: Mage
   m_TagString: Entity
@@ -155,23 +155,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1864097896612796}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114079347108171670
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1842211011145934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa499711eed1a4a4eb8fa6108214201d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_formationSlot:
-    X: 0
-    Z: 0
-  m_idleLookRotationSyncMaxDuration: 3
-  m_formationLeader: {fileID: 0}
-  m_entityType: 3
 --- !u!114 &114132192551782970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -183,6 +166,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc68dc458bc06647b24624b02c988e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114573526952917338
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1842211011145934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7100808aa0d15bf40a5d51957c2ba17e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_entityType: 3
+  m_idleLookRotationSyncMaxDuration: 3
+  m_formationLeader: {fileID: 0}
+  m_formationSlot:
+    X: 0
+    Z: 0
+  m_isFriendly: 0
 --- !u!136 &136397054249354076
 CapsuleCollider:
   m_ObjectHideFlags: 1

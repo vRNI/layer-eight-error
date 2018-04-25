@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 23149654996348388}
   - component: {fileID: 114105950729174932}
   - component: {fileID: 195965061645929898}
-  - component: {fileID: 114264924674396170}
+  - component: {fileID: 114989776844580406}
   m_Layer: 0
   m_Name: Fighter
   m_TagString: Entity
@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc68dc458bc06647b24624b02c988e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114264924674396170
+--- !u!114 &114989776844580406
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -174,15 +174,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1600633402972674}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa499711eed1a4a4eb8fa6108214201d, type: 3}
+  m_Script: {fileID: 11500000, guid: 7100808aa0d15bf40a5d51957c2ba17e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_entityType: 1
+  m_idleLookRotationSyncMaxDuration: 3
+  m_formationLeader: {fileID: 0}
   m_formationSlot:
     X: 0
     Z: 0
-  m_idleLookRotationSyncMaxDuration: 3
-  m_formationLeader: {fileID: 0}
-  m_entityType: 1
+  m_isFriendly: 0
 --- !u!136 &136298754471510998
 CapsuleCollider:
   m_ObjectHideFlags: 1
