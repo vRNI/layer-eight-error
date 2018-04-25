@@ -14,10 +14,10 @@ public class PrefabsManager
     }
 
     [ SerializeField ]
-    private GameObject[] m_allies;
+    private EntityProxyInfo[] m_entityProxies;
 
-    public GameObject[] GetAllies()
+    public EntityProxyInfo[] GetEntityProxies()
     {
-        return m_allies;
+        return m_entityProxies;
     }
 }

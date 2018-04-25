@@ -112,7 +112,7 @@ public class FormationConfiguration
     /// <summary>
     /// Contains all entities this formation contains.
     /// </summary>
-    private List< Entity > m_entities = new List< Entity >();
+    private readonly List< Entity > m_entities = new List< Entity >();
 
     /// <summary>
     /// Adds an entity to the formation.

@@ -1171,5 +1171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_emptyFormationSlot: {fileID: 1730812266129894, guid: 6ab49b340c2512e47b3a04ddc0019170,
     type: 2}
-  m_allies:
-  - {fileID: 1600633402972674, guid: abcbfe00980b4094e8c0b72a9ff74c51, type: 2}
+  m_entityProxies:
+  - EntityType: 0
+    ProxyPrefab: {fileID: 1067558289449618, guid: 3e401567138698b4bbc133162ed0205c,
+      type: 2}

@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
+public enum EntityType
+{
+    Fighter,
+}
+
 [ RequireComponent( typeof( EntityStateManager ) ) ]
 [ RequireComponent( typeof( NavMeshAgent ) ) ]
 [ DisallowMultipleComponent ]
@@ -15,6 +20,11 @@ public /*abstract*/ class Entity // make entity class abstract and add fighter a
     protected NavMeshAgent       m_navMeshAgent;
     protected EntityStateManager m_entityStateManager;
     
+    public /*abstract*/ EntityType GetEntityType()
+    {
+        return EntityType.Fighter; // move type to each explicit class
+    }
+
     public virtual void Awake()
     {
         m_navMeshAgent       = gameObject.GetComponent< NavMeshAgent >();
