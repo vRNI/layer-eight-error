@@ -120,13 +120,44 @@ public class FormationGameState
             // check if player releases dragged object
             if ( Input.GetMouseButtonUp( MouseButtonIndex.Left ) == true )
             {
-                // reset to original position
-                var dragDropTarget   = m_draggingObject.GetComponent< FormationEditorDragDropTarget >();
-                var slotPosition     = dragDropTarget.SlotPosition;
-                var gridSlotObject   = m_gridSlotObjects.Select( a_x => a_x.GetComponent< FormationEditorDragDropTarget >() ).SingleOrDefault( a_x => a_x.SlotPosition.X == slotPosition.X && a_x.SlotPosition.Z == slotPosition.Z );
-                if ( gridSlotObject == null ) { throw new RuntimeException( "No grid slot object exists to restore original position of entity proxy." ); }
-                var originalPosition = gridSlotObject.gameObject.GetComponent< Transform >().position;
-                m_draggingObject.gameObject.GetComponent< Transform >().position = originalPosition;
+                RaycastHit hit;
+                if ( MathUtil.RaycastFromMousePointer( out hit ) == false ) { return; }
+
+                var dragDropTarget = hit.collider.gameObject.GetComponent< FormationEditorDragDropTarget >();
+
+                // set it to new grid position
+                if ( dragDropTarget != null && dragDropTarget.GetEntityType() == EntityType.None )
+                {
+                    var dragDropSource       = m_draggingObject.GetComponent< FormationEditorDragDropTarget >();
+                    var slotPositionSource   = dragDropSource.SlotPosition;
+                    var slotPositionTarget   = dragDropTarget.SlotPosition;
+                    var gridSlotObjectSource = m_gridSlotObjects.Select( a_x => a_x.GetComponent< FormationEditorDragDropTarget >() ).Single( a_x => a_x.SlotPosition.X == slotPositionSource.X && a_x.SlotPosition.Z == slotPositionSource.Z );
+                    var gridSlotObjectTarget = m_gridSlotObjects.Select( a_x => a_x.GetComponent< FormationEditorDragDropTarget >() ).Single( a_x => a_x.SlotPosition.X == slotPositionTarget.X && a_x.SlotPosition.Z == slotPositionTarget.Z );
+
+                    // set new grid position for drop source
+                    dragDropSource.GetComponent< FormationEditorDragDropTarget >().SlotPosition = slotPositionTarget;
+                    // snap to grid position
+                    dragDropSource.GetComponent< Transform >().position = dragDropTarget.GetComponent< Transform >().position;
+                    // deactivate grid slot target
+                    gridSlotObjectTarget.gameObject.SetActive( false );
+                    // activate grid slot source
+                    gridSlotObjectSource.gameObject.SetActive( true );
+                    // write new slot position to non-proxy entity
+                    var player                 = Finder.GetPlayer();
+                    var formationConfiguration = player.GetComponent< FormationConfiguration >();
+                    var entities               = formationConfiguration.GetUnderlingEntities();
+                    var entity                 = entities.Single( a_x => a_x.GetFormationSlot().X == slotPositionSource.X && a_x.GetFormationSlot().Z == slotPositionSource.Z );
+                    entity.SetFormationSlot( slotPositionTarget );
+                }
+                else // reset to original position
+                {
+                    var dragDropSource   = m_draggingObject.GetComponent< FormationEditorDragDropTarget >();
+                    var slotPosition     = dragDropSource.SlotPosition;
+                    var gridSlotObject   = m_gridSlotObjects.Select( a_x => a_x.GetComponent< FormationEditorDragDropTarget >() ).SingleOrDefault( a_x => a_x.SlotPosition.X == slotPosition.X && a_x.SlotPosition.Z == slotPosition.Z );
+                    if ( gridSlotObject == null ) { throw new RuntimeException( "No grid slot object exists to restore original position of entity proxy." ); }
+                    var originalPosition = gridSlotObject.gameObject.GetComponent< Transform >().position;
+                    m_draggingObject.gameObject.GetComponent< Transform >().position = originalPosition;
+                }
 
                 // reset layer to default
                 m_draggingObject.layer = LayerMask.NameToLayer( LayerName.Default );

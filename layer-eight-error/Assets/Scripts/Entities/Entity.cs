@@ -55,6 +55,11 @@ public /*abstract*/ class Entity // make entity class abstract and add fighter a
         return m_formationSlot;
     }
 
+    public void SetFormationSlot( Position2 a_value )
+    {
+        m_formationSlot = a_value;
+    }
+
     public FormationConfiguration GetFormationConfiguration()
     {
         if ( m_formationLeader == null ) { return null; }
