@@ -12,6 +12,16 @@ public enum EntityType
     /// Represents the fighter entity.
     /// </summary>
     Fighter,
+
+    /// <summary>
+    /// Represents the ranger entity.
+    /// </summary>
+    Ranger,
+    
+    /// <summary>
+    /// Represents the mage entity.
+    /// </summary>
+    Mage,
 }
 
 [ RequireComponent( typeof( EntityStateManager ) ) ]
@@ -25,12 +35,14 @@ public /*abstract*/ class Entity // make entity class abstract and add fighter a
     protected Position2          m_formationSlot;
     [SerializeField] // replace this by resurrection spell ( before enemy, after player )
     protected GameObject m_formationLeader;
+    [ SerializeField ]
+    protected EntityType m_entityType;
     protected NavMeshAgent       m_navMeshAgent;
     protected EntityStateManager m_entityStateManager;
     
     public /*abstract*/ EntityType GetEntityType()
     {
-        return EntityType.Fighter; // move type to each explicit class
+        return m_entityType; // move type to each explicit class
     }
 
     public virtual void Awake()
