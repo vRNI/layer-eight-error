@@ -23,8 +23,8 @@ public /*abstract*/ class Entity // make entity class abstract and add fighter a
     protected EntityState        m_currentState;
     [ SerializeField ] // replace this by formation editor
     protected Position2          m_formationSlot;
-    [ SerializeField ] // replace this by resurrection spell ( before enemy, after player )
-    protected GameObject         m_formationLeader;
+    [SerializeField] // replace this by resurrection spell ( before enemy, after player )
+    protected GameObject m_formationLeader;
     protected NavMeshAgent       m_navMeshAgent;
     protected EntityStateManager m_entityStateManager;
     
@@ -114,4 +114,10 @@ public /*abstract*/ class Entity // make entity class abstract and add fighter a
 
         throw new System.InvalidOperationException("m_formationLeader is not assigned.");
     }
+    
+    public void AddUnderlingUnit()
+    {
+        m_formationLeader.GetComponent<FormationConfiguration>().AddUnderlingEntity(this);
+    }
+
 }

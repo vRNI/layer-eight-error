@@ -1,3 +1,4 @@
+
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ public class FormationConfiguration
     [Tooltip("Defines the formation grid size in slots.")]
     [SerializeField]
     private Position2 m_gridSize = new Position2(9, 9);
+    private readonly List<Entity> m_underlingUnits = new List< Entity >();
 
     /// <summary>
     /// Gets the formation grid size in slots.
@@ -110,11 +112,6 @@ public class FormationConfiguration
     }
 
     /// <summary>
-    /// Contains all entities this formation contains.
-    /// </summary>
-    private readonly List< Entity > m_entities = new List< Entity >();
-
-    /// <summary>
     /// Adds an entity to the formation.
     /// </summary>
     /// <param name="a_entity">
@@ -122,14 +119,14 @@ public class FormationConfiguration
     /// </param>
     public void AddUnderlingEntity( Entity a_entity )
     {
-        m_entities.Add( a_entity );
+        m_underlingUnits.Add( a_entity );
     }
 
     /// <summary>
     /// Gets all entities.
     /// </summary>
-    public Entity[] GetUnderlingEntities()
+    public List<Entity> GetUnderlingUnits()
     {
-        return m_entities.ToArray();
+        return m_underlingUnits;
     }
 }

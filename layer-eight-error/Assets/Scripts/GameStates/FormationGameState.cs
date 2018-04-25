@@ -29,7 +29,7 @@ public class FormationGameState
 
         var playerRotationY        = playerEulerAngles.y;
         var formationConfiguration = player.GetComponent< FormationConfiguration >();
-        var entities               = formationConfiguration.GetUnderlingEntities();
+        var entities               = formationConfiguration.GetUnderlingUnits();
         var prefabsManager         = Finder.GetPrefabs();
         // EntityType.None is preserved for the empty slot prefab
         var emptySlotPrefab        = prefabsManager.GetEntityProxies().Where( a_x => a_x.EntityType == EntityType.None ).Select( a_x => a_x.ProxyPrefab ).SingleOrDefault();
@@ -55,7 +55,7 @@ public class FormationGameState
             m_gridSlotObjects[ i ].GetComponent< Transform >().position   = targetPosition;
         }
 
-        m_proxyObjects    = new GameObject[ entities.Length ];
+        m_proxyObjects    = new GameObject[ entities.Count ];
 
         // disable already used slots
         int j = -1;
@@ -145,7 +145,7 @@ public class FormationGameState
                     // write new slot position to non-proxy entity
                     var player                 = Finder.GetPlayer();
                     var formationConfiguration = player.GetComponent< FormationConfiguration >();
-                    var entities               = formationConfiguration.GetUnderlingEntities();
+                    var entities               = formationConfiguration.GetUnderlingUnits();
                     var entity                 = entities.Single( a_x => a_x.GetFormationSlot().X == slotPositionSource.X && a_x.GetFormationSlot().Z == slotPositionSource.Z );
                     entity.SetFormationSlot( slotPositionTarget );
                 }
@@ -183,7 +183,7 @@ public class FormationGameState
     {
         var player                 = Finder.GetPlayer();
         var formationConfiguration = player.GetComponent< FormationConfiguration >();
-        var entities               = formationConfiguration.GetUnderlingEntities();
+        var entities               = formationConfiguration.GetUnderlingUnits();
 
         // re-activate all friendly entities
         foreach ( var entity in entities )

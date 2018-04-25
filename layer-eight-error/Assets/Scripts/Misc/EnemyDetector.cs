@@ -48,7 +48,26 @@ public class EnemyDetector : MonoBehaviour
             if (!entity.IsFriendly())
             {
                 if (gameStateManager.GetCurrentState().GetType() != typeof(BattleGameState))
+                {
+
                     EventManager.TriggerEvent("TransitionBattleState");
+                }
+
+                if (entity.GetComponent<EntityStateManager>().IsCurrentState<WalkEntityState>()
+                    || entity.GetComponent<EntityStateManager>().IsCurrentState<IdleEntityState>())
+                {
+                    entity.GetComponent<EntityStateManager>().IsCurrentState<CombatEntityState>();
+                    // set unit state to battle
+                    var underlings = other.gameObject.GetComponent<FormationConfiguration>().GetUnderlingUnits();
+                    foreach (var underling in underlings)
+                    {
+                        if (underling.GetComponent<EntityStateManager>().IsCurrentState<WalkEntityState>()
+                            || underling.GetComponent<EntityStateManager>().IsCurrentState<IdleEntityState>())
+                        {
+                            underling.GetComponent<EntityStateManager>().SetCurrentState<CombatEntityState>();
+                        }
+                    }
+                }
 
                 enemyDetected = true;
             }
