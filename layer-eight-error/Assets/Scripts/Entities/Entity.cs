@@ -3,6 +3,14 @@ using UnityEngine.AI;
 
 public enum EntityType
 {
+    /// <summary>
+    /// Represents no specific entity.
+    /// </summary>
+    None,
+
+    /// <summary>
+    /// Represents the fighter entity.
+    /// </summary>
     Fighter,
 }
 

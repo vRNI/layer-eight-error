@@ -9,6 +9,7 @@ public class FormationGameState
     private Vector3 m_originalOrbitRotation;
     private GameObject[] m_gridSlotObjects;
     private GameObject[] m_proxyObjects;
+    private GameObject m_draggingObject;
 
     public override void Enter()
     {
@@ -30,13 +31,15 @@ public class FormationGameState
         var formationConfiguration = player.GetComponent< FormationConfiguration >();
         var entities               = formationConfiguration.GetUnderlingEntities();
         var prefabsManager         = Finder.GetPrefabs();
+        // EntityType.None is preserved for the empty slot prefab
+        var emptySlotPrefab        = prefabsManager.GetEntityProxies().Where( a_x => a_x.EntityType == EntityType.None ).Select( a_x => a_x.ProxyPrefab ).SingleOrDefault();
 
         m_gridSlotObjects = new GameObject[ formationConfiguration.GetSlotCount() ];
         
         int i = -1;
         foreach ( var slotPosition in formationConfiguration.EnumerateSlotPosition() )
         {
-            m_gridSlotObjects[ ++i ] = Object.Instantiate( prefabsManager.GetEmptyFormationSlot() );
+            m_gridSlotObjects[ ++i ] = Object.Instantiate( emptySlotPrefab );
             m_gridSlotObjects[ i ].GetComponent< FormationEditorDragDropTarget >().SlotPosition = slotPosition;
 
             var slotOffset             = formationConfiguration.GetSlotOffset( slotPosition );
@@ -50,7 +53,6 @@ public class FormationGameState
             }
 
             m_gridSlotObjects[ i ].GetComponent< Transform >().position   = targetPosition;
-            m_gridSlotObjects[ i ].GetComponent< Transform >().localScale = new Vector3( 0.3f, 0.3f, 0.3f );
         }
 
         m_proxyObjects    = new GameObject[ entities.Length ];
@@ -93,6 +95,56 @@ public class FormationGameState
         {
             TriggerTransition< IdleGameState >();
             return;
+        }
+
+        if ( m_draggingObject == null )
+        {
+            // remember game object if player clicked on a proxy
+            if ( Input.GetMouseButtonDown( MouseButtonIndex.Left ) == true )
+            {
+                RaycastHit hit;
+                if ( MathUtil.RaycastFromMousePointer( out hit ) == true )
+                {
+                    var hitObject = hit.collider.gameObject;
+                    var dragDropTarget = hitObject.GetComponent< FormationEditorDragDropTarget >();
+                    // ignore object if it is no drag drop target or an empty slot
+                    if ( dragDropTarget == null || dragDropTarget.GetEntityType() == EntityType.None ) { return; }
+                    // ignore in future ray casts until object is dropped again
+                    hitObject.layer = LayerMask.NameToLayer( LayerName.IgnoreRaycast );
+                    m_draggingObject = hitObject;
+                }
+            }
+        }
+        else
+        {
+            // check if player releases dragged object
+            if ( Input.GetMouseButtonUp( MouseButtonIndex.Left ) == true )
+            {
+                // reset to original position
+                var dragDropTarget   = m_draggingObject.GetComponent< FormationEditorDragDropTarget >();
+                var slotPosition     = dragDropTarget.SlotPosition;
+                var gridSlotObject   = m_gridSlotObjects.Select( a_x => a_x.GetComponent< FormationEditorDragDropTarget >() ).SingleOrDefault( a_x => a_x.SlotPosition.X == slotPosition.X && a_x.SlotPosition.Z == slotPosition.Z );
+                if ( gridSlotObject == null ) { throw new RuntimeException( "No grid slot object exists to restore original position of entity proxy." ); }
+                var originalPosition = gridSlotObject.gameObject.GetComponent< Transform >().position;
+                m_draggingObject.gameObject.GetComponent< Transform >().position = originalPosition;
+
+                // reset layer to default
+                m_draggingObject.layer = LayerMask.NameToLayer( LayerName.Default );
+                // then clear dragging object
+                m_draggingObject = null;
+            }
+            else // follow mouse cursor
+            {
+                RaycastHit hit;
+                if ( MathUtil.RaycastFromMousePointer( out hit ) == true )
+                {
+                    var hitPosition     = hit.point;
+                    var currentPosition = m_draggingObject.GetComponent< Transform >().position;
+                    var newPosition     = new Vector3( hitPosition.x, currentPosition.y, hitPosition.z );
+
+                    m_draggingObject.GetComponent< Transform >().position = newPosition;
+                }
+            }
         }
     }
 

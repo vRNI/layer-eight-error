@@ -1173,5 +1173,8 @@ MonoBehaviour:
     type: 2}
   m_entityProxies:
   - EntityType: 0
+    ProxyPrefab: {fileID: 1730812266129894, guid: 6ab49b340c2512e47b3a04ddc0019170,
+      type: 2}
+  - EntityType: 1
     ProxyPrefab: {fileID: 1067558289449618, guid: 3e401567138698b4bbc133162ed0205c,
       type: 2}
