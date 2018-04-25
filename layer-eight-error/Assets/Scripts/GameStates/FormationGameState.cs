@@ -69,7 +69,6 @@ public class FormationGameState
             m_proxyObjects[ ++j ] = Object.Instantiate( proxyPrefab );
             m_proxyObjects[ j ].GetComponent< FormationEditorDragDropTarget >().SlotPosition = slotPosition;
             m_proxyObjects[ j ].GetComponent< Transform >().eulerAngles = new Vector3( 0.0f, playerRotationY, 0.0f );
-            m_proxyObjects[ j ].GetComponent< Transform >().localScale  = new Vector3( 0.5f, 0.5f, 0.5f ); // scale proxy down
             m_proxyObjects[ j ].GetComponent< Transform >().position    = gridSlotObject.GetComponent< Transform >().position;
         }
 
