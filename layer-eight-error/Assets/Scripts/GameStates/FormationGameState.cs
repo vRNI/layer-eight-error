@@ -124,11 +124,11 @@ public class FormationGameState
                 if ( MathUtil.RaycastFromMousePointer( out hit ) == false ) { return; }
 
                 var dragDropTarget = hit.collider.gameObject.GetComponent< FormationEditorDragDropTarget >();
+                var dragDropSource = m_draggingObject.GetComponent< FormationEditorDragDropTarget >();
 
                 // set it to new grid position
                 if ( dragDropTarget != null && dragDropTarget.GetEntityType() == EntityType.None )
                 {
-                    var dragDropSource       = m_draggingObject.GetComponent< FormationEditorDragDropTarget >();
                     var slotPositionSource   = dragDropSource.SlotPosition;
                     var slotPositionTarget   = dragDropTarget.SlotPosition;
                     var gridSlotObjectSource = m_gridSlotObjects.Select( a_x => a_x.GetComponent< FormationEditorDragDropTarget >() ).Single( a_x => a_x.SlotPosition.X == slotPositionSource.X && a_x.SlotPosition.Z == slotPositionSource.Z );
@@ -149,9 +149,39 @@ public class FormationGameState
                     var entity                 = entities.Single( a_x => a_x.GetFormationSlot().X == slotPositionSource.X && a_x.GetFormationSlot().Z == slotPositionSource.Z );
                     entity.SetFormationSlot( slotPositionTarget );
                 }
+                // swap position with entity of other type
+                else if ( dragDropTarget != null && dragDropTarget.GetEntityType() != dragDropSource.GetEntityType() )
+                {
+                    var slotPositionTarget   = dragDropTarget.SlotPosition;
+                    var gridSlotObjectTarget = m_gridSlotObjects.Select( a_x => a_x.GetComponent< FormationEditorDragDropTarget >() ).Single( a_x => a_x.SlotPosition.X == slotPositionTarget.X && a_x.SlotPosition.Z == slotPositionTarget.Z );
+                    var positionTarget       = gridSlotObjectTarget.GetComponent< Transform >().position;
+                    var slotPositionSource   = dragDropSource.SlotPosition;
+                    var gridSlotObjectSource = m_gridSlotObjects.Select( a_x => a_x.GetComponent< FormationEditorDragDropTarget >() ).Single( a_x => a_x.SlotPosition.X == slotPositionSource.X && a_x.SlotPosition.Z == slotPositionSource.Z );
+                    var positionSource       = gridSlotObjectSource.GetComponent< Transform >().position;
+                    
+                    var player                 = Finder.GetPlayer();
+                    var formationConfiguration = player.GetComponent< FormationConfiguration >();
+                    var entities               = formationConfiguration.GetUnderlingUnits();
+
+                    // search entities before writing positions
+                    var sourceEntity           = entities.Single( a_x => a_x.GetFormationSlot().X == slotPositionSource.X && a_x.GetFormationSlot().Z == slotPositionSource.Z );
+                    var targetEntity           = entities.Single( a_x => a_x.GetFormationSlot().X == slotPositionTarget.X && a_x.GetFormationSlot().Z == slotPositionTarget.Z );
+                    
+                    // set target position to drop source
+                    dragDropSource.GetComponent< FormationEditorDragDropTarget >().SlotPosition = slotPositionTarget;
+                    // snap to grid position of drop target
+                    dragDropSource.GetComponent< Transform >().position = positionTarget;
+                    // write target slot position to source non-proxy entity
+                    sourceEntity.SetFormationSlot( slotPositionTarget );
+                    // set source position to drop target
+                    dragDropTarget.GetComponent< FormationEditorDragDropTarget >().SlotPosition = slotPositionSource;
+                    // snap to grid position of drop source
+                    dragDropTarget.GetComponent< Transform >().position = positionSource;
+                    // write source slot position to target non-proxy entity
+                    targetEntity.SetFormationSlot( slotPositionSource );
+                }
                 else // reset to original position
                 {
-                    var dragDropSource   = m_draggingObject.GetComponent< FormationEditorDragDropTarget >();
                     var slotPosition     = dragDropSource.SlotPosition;
                     var gridSlotObject   = m_gridSlotObjects.Select( a_x => a_x.GetComponent< FormationEditorDragDropTarget >() ).SingleOrDefault( a_x => a_x.SlotPosition.X == slotPosition.X && a_x.SlotPosition.Z == slotPosition.Z );
                     if ( gridSlotObject == null ) { throw new RuntimeException( "No grid slot object exists to restore original position of entity proxy." ); }
