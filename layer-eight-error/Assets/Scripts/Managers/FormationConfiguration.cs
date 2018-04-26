@@ -24,6 +24,29 @@ public class FormationConfiguration
     }
 
     /// <summary>
+    /// Grows the grid size ( new grid size must result in odd X and Z values ).
+    /// </summary>
+    /// <param name="a_x">
+    /// The x value to grow ( must be non-negative ).
+    /// </param>
+    /// <param name="a_z">
+    /// The z value to grow ( must be non-negative ).
+    /// </param>
+    public void GrowGridSize( int a_x, int a_z )
+    {
+        // ensure growth
+        if ( a_x < 0 || a_z < 0 ) { return; }
+
+        var gridSizeOld = m_gridSize;
+        var gridSizeNew = new Position2( gridSizeOld.X + a_x, gridSizeOld.Z + a_z );
+
+        // ensure odd grid size
+        if ( gridSizeNew.X % 2 == 0 || gridSizeNew.Z % 2 == 0 ) { return; }
+        // set new grid size
+        m_gridSize      = gridSizeNew;
+    }
+
+    /// <summary>
     /// Gets the total formation slot count.
     /// </summary>
     public int GetSlotCount()
@@ -167,6 +190,9 @@ public class FormationConfiguration
 
             foreach (var underlingEntity in m_underlingUnits)
             {
+                // exclude player slot
+                if ( position2.X == 0 && position2.Z == 0 ) { occupied = true; }
+
                 if (underlingEntity.GetFormationSlot().X == position2.X
                     && underlingEntity.GetFormationSlot().Z == position2.Z)
                 {
