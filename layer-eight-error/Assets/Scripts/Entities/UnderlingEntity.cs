@@ -6,13 +6,6 @@ using System;
 [RequireComponent(typeof(EntityStateManager))]
 public class UnderlingEntity : BaseEntity {
 
-    [Serializable]
-    protected struct UnderlingStats
-    {
-        int m_healthPoints, m_attackPoints;
-        float m_attackRange, m_attackAngle;
-    }
-
     BaseEntity m_target;
 
     [SerializeField]
@@ -20,9 +13,6 @@ public class UnderlingEntity : BaseEntity {
     protected EntityStateManager m_entityStateManager;
     [SerializeField]
     protected Position2 m_formationSlot;
-    
-    [SerializeField]
-    protected UnderlingStats m_underlingStats;
     [SerializeField]
     protected bool m_isFriendly;
     public bool IsFriendly { get { return m_isFriendly; } }
@@ -98,6 +88,12 @@ public class UnderlingEntity : BaseEntity {
         m_navMeshAgent.SetDestination(m_target.gameObject.transform.position);
     }
 
+    public virtual void AttackTarget()
+    {
+        m_target.ReceiveDamage(m_attackPoints);
+        Debug.Log(m_attackPoints + " were inflicted.");
+    }
+
     public virtual void SetTarget(BaseEntity a_entity)
     {
         m_target = a_entity;
@@ -125,5 +121,17 @@ public class UnderlingEntity : BaseEntity {
     protected virtual void Die()
     {
 
+    }
+
+    public override void ReceiveDamage(int damageValue)
+    {
+        m_healthPoints -= damageValue;
+        // if <= 0 -> dead entity
+        // to list -> dead entities
+    }
+
+    public float GetDistanceToTarget()
+    {
+        return Vector3.Distance(this.GetWorldPosition(), m_target.GetWorldPosition());
     }
 }

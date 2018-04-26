@@ -37,6 +37,13 @@ public class WalkEntityState
             }
 
             m_entity.SeekTargetPosition();
+
+            // if distance_threshold > distance -> switch to attack state;
+            // and attack angle -> adjust rotation, and so on;
+            if (m_entity.GetDistanceToTarget() < m_entity.AttackRange)
+            {
+                m_entity.SetCurrentState<AttackingEntityState>();
+            }
         }
         else
         {

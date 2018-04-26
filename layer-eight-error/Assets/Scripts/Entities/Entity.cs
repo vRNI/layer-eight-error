@@ -12,7 +12,7 @@ public /*abstract*/ class Entity // make entity class abstract and add fighter a
     [ SerializeField ] // replace this by formation editor
     protected Position2          m_formationSlot;
     [SerializeField] // replace this by resurrection spell ( before enemy, after player )
-    protected GameObject m_formationLeader;
+    protected GameObject         m_formationLeader;
     protected NavMeshAgent       m_navMeshAgent;
     protected EntityStateManager m_entityStateManager;
     
