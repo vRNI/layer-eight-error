@@ -18,7 +18,7 @@ public class PlayerMouseController
     private void Update () 
     {
         if ( Finder.GetGameStateManager().IsCurrentState< FormationGameState >() ) { return; }
-        if ( Input.GetMouseButtonUp( MouseButtonIndex.Left ) )
+        if ( Input.GetMouseButtonDown( MouseButtonIndex.Left ) )
         {
             // on hit set desired position
             RaycastHit hit;
@@ -26,6 +26,22 @@ public class PlayerMouseController
             {
                 // add half of player height to desired position, so the distance for idle / walk states are correctly calculated
                 m_desiredPosition = hit.point + Finder.GetPlayerHeight() / 2.0f;
+            }
+        }
+        if (Input.GetMouseButtonDown(2))
+        {
+            // on hit set desired position
+            RaycastHit hit;
+            
+            if (MathUtil.RaycastFromMousePointer(out hit) == true)
+            {
+                var gameObject = hit.transform.gameObject;
+                if (gameObject.GetComponent<UnderlingEntity>() != null
+                && gameObject.GetComponent<UnderlingEntity>().GetLeader() == null)
+                {
+                    Debug.Log("Dead Enemy Hit");
+                    //gameObject.GetComponent<UnderlingEntity>().Resurect();
+                }
             }
         }
     }

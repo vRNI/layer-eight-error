@@ -158,6 +158,7 @@ public class UnderlingEntity : BaseEntity {
 
     protected virtual void Die()
     {
+        m_formationLeader.GetComponent<LeaderEntity>().GetFormationConfiguration().RemoveUnderlingEntity(this);
         m_formationLeader = null;
         SetCurrentState<DeadEntityState>();
     }

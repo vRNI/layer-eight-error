@@ -124,6 +124,25 @@ public class FormationConfiguration
     }
 
     /// <summary>
+    /// Adds an entity to the formation.
+    /// </summary>
+    /// <param name="a_entity">
+    /// The entity.
+    /// </param>
+    public void RemoveUnderlingEntity(UnderlingEntity a_entity)
+    {
+        m_underlingUnits.Remove(a_entity);
+        if (m_underlingUnits.Count == 0)
+        {
+            if (a_entity.GetLeader() != Finder.GetPlayer())
+            {
+                GameObject.Destroy(gameObject);
+            }
+        }
+
+    }
+
+    /// <summary>
     /// Gets all entities.
     /// </summary>
     public List< UnderlingEntity > GetUnderlingUnits()
