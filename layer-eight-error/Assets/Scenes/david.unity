@@ -459,7 +459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enabled: 1
-  m_areControlsEnabled: 0
+  m_areControlsEnabled: 1
   m_localRotation: {x: 0, y: 45, z: 0}
   m_sensitivityX: 5
   m_sensitivityY: 5
