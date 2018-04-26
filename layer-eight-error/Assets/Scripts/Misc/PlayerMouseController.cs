@@ -30,7 +30,7 @@ public class PlayerMouseController
             }
         }
         
-        if (Input.GetMouseButtonDown(2))
+        if ( Input.GetMouseButtonDown( MouseButtonIndex.Middle ) )
         {
             // on hit set desired position
             RaycastHit hit;

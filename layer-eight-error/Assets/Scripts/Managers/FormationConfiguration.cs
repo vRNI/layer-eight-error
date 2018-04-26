@@ -167,6 +167,9 @@ public class FormationConfiguration
 
             foreach (var underlingEntity in m_underlingUnits)
             {
+                // exclude player slot
+                if ( position2.X == 0 && position2.Z == 0 ) { occupied = true; }
+
                 if (underlingEntity.GetFormationSlot().X == position2.X
                     && underlingEntity.GetFormationSlot().Z == position2.Z)
                 {

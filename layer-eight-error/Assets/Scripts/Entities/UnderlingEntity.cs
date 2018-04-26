@@ -22,7 +22,6 @@ public class UnderlingEntity : BaseEntity {
     // Use this for initialization
     void Start () {
         m_formationLeader.GetComponent<LeaderEntity>().GetFormationConfiguration().AddUnderlingEntity(this);
-        Debug.Log(m_formationLeader.GetComponent<FormationConfiguration>().GetUnderlingUnits().Count);
     }
 	
 	// Update is called once per frame
@@ -162,6 +161,7 @@ public class UnderlingEntity : BaseEntity {
     public virtual void Resurect()
     {
         Debug.Log("Ressurect");
+        m_isFriendly      = true;
         m_formationLeader = Finder.GetPlayer();
         var formationConfiguration = m_formationLeader.GetComponent<LeaderOverlord>().GetFormationConfiguration();
         var slotPos = formationConfiguration.GetEmptyFormationSlot();
