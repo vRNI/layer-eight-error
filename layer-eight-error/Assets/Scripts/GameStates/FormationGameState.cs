@@ -40,7 +40,7 @@ public class FormationGameState
         foreach ( var slotPosition in formationConfiguration.EnumerateSlotPosition() )
         {
             m_gridSlotObjects[ ++i ] = Object.Instantiate( emptySlotPrefab );
-            m_gridSlotObjects[ i ].GetComponent< FormationEditorDragDropTarget >().SlotPosition = slotPosition;
+            GetGridSlotDragDropTarget( m_gridSlotObjects[ i ] ).SlotPosition = slotPosition;
 
             var slotOffset             = formationConfiguration.GetSlotOffset( slotPosition );
             var slotOffsetRotated      = Quaternion.AngleAxis( playerRotationY, Vector3.up ) * slotOffset;
@@ -62,7 +62,7 @@ public class FormationGameState
         foreach ( var entity in entities )
         {
             var slotPosition      = entity.GetFormationSlot();
-            var gridSlotObject    = m_gridSlotObjects.SingleOrDefault( a_x => AreEqual( a_x.GetComponent< FormationEditorDragDropTarget >().SlotPosition, slotPosition ) );
+            var gridSlotObject    = GetGridSlotObject( slotPosition );
             if ( gridSlotObject == null ) { continue; }
             gridSlotObject.SetActive( false );
             // place entity proxy here
@@ -79,11 +79,6 @@ public class FormationGameState
         {
             entity.gameObject.SetActive( false );
         }
-    }
-
-    private bool AreEqual( Position2 a_one, Position2 a_other )
-    {
-        return a_one.X == a_other.X && a_one.Z == a_other.Z;
     }
 
     public override void Update()
@@ -129,10 +124,10 @@ public class FormationGameState
                 // set it to new grid position
                 if ( dragDropTarget != null && dragDropTarget.GetEntityType() == EntityType.None )
                 {
-                    var slotPositionSource   = dragDropSource.SlotPosition;
-                    var slotPositionTarget   = dragDropTarget.SlotPosition;
-                    var gridSlotObjectSource = m_gridSlotObjects.Select( a_x => a_x.GetComponent< FormationEditorDragDropTarget >() ).Single( a_x => a_x.SlotPosition.X == slotPositionSource.X && a_x.SlotPosition.Z == slotPositionSource.Z );
-                    var gridSlotObjectTarget = m_gridSlotObjects.Select( a_x => a_x.GetComponent< FormationEditorDragDropTarget >() ).Single( a_x => a_x.SlotPosition.X == slotPositionTarget.X && a_x.SlotPosition.Z == slotPositionTarget.Z );
+                    var slotPositionTarget     = dragDropTarget.SlotPosition;
+                    var gridSlotObjectTarget   = GetGridSlotObject( slotPositionTarget );
+                    var slotPositionSource     = dragDropSource.SlotPosition;
+                    var gridSlotObjectSource   = GetGridSlotObject( slotPositionSource );
 
                     // set new grid position for drop source
                     dragDropSource.GetComponent< FormationEditorDragDropTarget >().SlotPosition = slotPositionTarget;
@@ -152,12 +147,12 @@ public class FormationGameState
                 // swap position with entity of other type
                 else if ( dragDropTarget != null && dragDropTarget.GetEntityType() != dragDropSource.GetEntityType() )
                 {
-                    var slotPositionTarget   = dragDropTarget.SlotPosition;
-                    var gridSlotObjectTarget = m_gridSlotObjects.Select( a_x => a_x.GetComponent< FormationEditorDragDropTarget >() ).Single( a_x => a_x.SlotPosition.X == slotPositionTarget.X && a_x.SlotPosition.Z == slotPositionTarget.Z );
-                    var positionTarget       = gridSlotObjectTarget.GetComponent< Transform >().position;
-                    var slotPositionSource   = dragDropSource.SlotPosition;
-                    var gridSlotObjectSource = m_gridSlotObjects.Select( a_x => a_x.GetComponent< FormationEditorDragDropTarget >() ).Single( a_x => a_x.SlotPosition.X == slotPositionSource.X && a_x.SlotPosition.Z == slotPositionSource.Z );
-                    var positionSource       = gridSlotObjectSource.GetComponent< Transform >().position;
+                    var slotPositionTarget     = dragDropTarget.SlotPosition;
+                    var gridSlotObjectTarget   = GetGridSlotObject( slotPositionTarget );
+                    var positionTarget         = gridSlotObjectTarget.GetComponent< Transform >().position;
+                    var slotPositionSource     = dragDropSource.SlotPosition;
+                    var gridSlotObjectSource   = GetGridSlotObject( slotPositionSource );
+                    var positionSource         = gridSlotObjectSource.GetComponent< Transform >().position;
                     
                     var player                 = Finder.GetPlayer();
                     var formationConfiguration = player.GetComponent< FormationConfiguration >();
@@ -183,7 +178,7 @@ public class FormationGameState
                 else // reset to original position
                 {
                     var slotPosition     = dragDropSource.SlotPosition;
-                    var gridSlotObject   = m_gridSlotObjects.Select( a_x => a_x.GetComponent< FormationEditorDragDropTarget >() ).SingleOrDefault( a_x => a_x.SlotPosition.X == slotPosition.X && a_x.SlotPosition.Z == slotPosition.Z );
+                    var gridSlotObject   = GetGridSlotObject( slotPosition );
                     if ( gridSlotObject == null ) { throw new RuntimeException( "No grid slot object exists to restore original position of entity proxy." ); }
                     var originalPosition = gridSlotObject.gameObject.GetComponent< Transform >().position;
                     m_draggingObject.gameObject.GetComponent< Transform >().position = originalPosition;
@@ -240,5 +235,20 @@ public class FormationGameState
         cameraOrbitScript.LocalRotation      = m_originalOrbitRotation;
 
         base.Exit();
+    }
+
+    private static FormationEditorDragDropTarget GetGridSlotDragDropTarget( GameObject a_gridSlot )
+    {
+        return a_gridSlot.GetComponent< FormationEditorDragDropTarget >();
+    }
+
+    private GameObject GetGridSlotObject( Position2 a_position )
+    {
+        return m_gridSlotObjects.SingleOrDefault( a_x => AreEqual( GetGridSlotDragDropTarget( a_x ).SlotPosition, a_position ) );
+    }
+
+    private static bool AreEqual( Position2 a_one, Position2 a_other )
+    {
+        return a_one.X == a_other.X && a_one.Z == a_other.Z;
     }
 }
