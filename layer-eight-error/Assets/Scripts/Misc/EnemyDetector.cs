@@ -29,36 +29,38 @@ public class EnemyDetector : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        var entity = other.gameObject.GetComponent<LeaderEntity>();
-        if (entity != null)
-        {
-            if (other.gameObject != Finder.GetPlayer())
-            {
-                enemyDetected = true;
-            }
-        }
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
         var gameStateManager = Finder.GetGameStateManager();
 
-        // Get Leader State Machine -> is not null;
-        var entity = other.gameObject.GetComponent<LeaderEntity>();
-        if (entity != null)
+        if ( gameStateManager.IsCurrentState< IdleGameState >() )
         {
-            if (other.gameObject != Finder.GetPlayer())
+            // Get Leader State Machine -> is not null;
+            var entity = other.gameObject.GetComponent<LeaderEntity>();
+            if (entity != null)
             {
-                if (gameStateManager.GetCurrentState().GetType() != typeof(BattleGameState))
+                if (other.gameObject != Finder.GetPlayer())
                 {
-                    EventManager.TriggerEvent("TransitionBattleState");
-                    Finder.GetPlayer().GetComponent<LeaderOverlord>().SetUnderlingsHostility(true);
+                    if (gameStateManager.GetCurrentState().GetType() != typeof(BattleGameState))
+                    {
+                        EventManager.TriggerEvent("TransitionBattleState");
+                        Finder.GetPlayer().GetComponent<LeaderOverlord>().SetUnderlingsHostility(true);
+                    }
+
+                    if (!other.gameObject.GetComponent<LeaderEntity>().IsHostile)
+                        other.gameObject.GetComponent<LeaderEntity>().SetUnderlingsHostility(true);
+
+                    enemyDetected = true;
                 }
-
-                if (!other.gameObject.GetComponent<LeaderEntity>().IsHostile)
-                    other.gameObject.GetComponent<LeaderEntity>().SetUnderlingsHostility(true);
-
-                enemyDetected = true;
+            }
+        }
+        else
+        {
+            var entity = other.gameObject.GetComponent<LeaderEntity>();
+            if (entity != null)
+            {
+                if (other.gameObject != Finder.GetPlayer())
+                {
+                    enemyDetected = true;
+                }
             }
         }
     }

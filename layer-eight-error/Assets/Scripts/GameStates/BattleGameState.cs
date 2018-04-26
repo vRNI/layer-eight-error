@@ -33,6 +33,13 @@ public class BattleGameState : GameState {
     {
         base.Update();
         
+        // check if the player activated the formation state
+        if (Input.GetButtonDown(AxisName.ToggleFormationMode) == true)
+        {
+            TriggerTransition< FormationGameState >();
+            return;
+        }
+        // update force seek formation slot behavior
         if ( Input.GetButtonDown( AxisName.ForceFormationSlotPosition ) == true )
         {
             if ( m_areAlliesSeekingFormationSlot == false )
@@ -51,6 +58,7 @@ public class BattleGameState : GameState {
                     m_areAlliesSeekingFormationSlot = false;
                 }
             }
+            return;
         }
     }
 }
