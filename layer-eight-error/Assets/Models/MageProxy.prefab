@@ -20,9 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4103013598045562}
   - component: {fileID: 33807982945390208}
-  - component: {fileID: 136266117129221712}
   - component: {fileID: 23182868392354356}
   - component: {fileID: 114646827361936886}
+  - component: {fileID: 135679978932199042}
   m_Layer: 0
   m_Name: MageProxy
   m_TagString: Entity
@@ -39,7 +39,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4652081363923100}
   - component: {fileID: 33510908102786256}
-  - component: {fileID: 136945352532514954}
   - component: {fileID: 23747279341803152}
   m_Layer: 0
   m_Name: Nose
@@ -165,8 +164,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_entityType: 3
---- !u!136 &136266117129221712
-CapsuleCollider:
+--- !u!135 &135679978932199042
+SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -174,20 +173,6 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &136945352532514954
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1979129629331488}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
+  serializedVersion: 2
+  m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
