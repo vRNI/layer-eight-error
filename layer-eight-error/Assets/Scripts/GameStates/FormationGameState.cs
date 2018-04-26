@@ -234,8 +234,8 @@ public class FormationGameState
         cameraOrbitScript.AreControlsEnabled = true;
         cameraOrbitScript.LocalRotation      = m_originalOrbitRotation;
 
-        foreach (UnderlingEntity underling in entities)
-            underling.SetCurrentState<SeekFormationSlotPositionState>();
+        //foreach (UnderlingEntity underling in entities)
+        //    underling.SetCurrentState<SeekFormationSlotPositionState>();
 
         base.Exit();
     }

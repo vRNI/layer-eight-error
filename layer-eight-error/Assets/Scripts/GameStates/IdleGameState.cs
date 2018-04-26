@@ -32,5 +32,14 @@ public class IdleGameState
             TriggerTransition< FormationGameState >();
             return;
         }
+
+        if ( Input.GetButtonDown( AxisName.ForceFormationSlotPosition ) == true )
+        {
+            foreach( var underling in Finder.GetPlayer().GetComponent< FormationConfiguration >().GetUnderlingUnits() )
+            {
+                underling.SetCurrentState<SeekFormationSlotPositionState>();
+            }
+            return;
+        }
     }
 }

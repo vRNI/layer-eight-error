@@ -53,7 +53,7 @@ public class WalkEntityState
             if (formationConfiguration.IsValid(formationSlot))
             {
                 // check if slot needs to be followed
-                if (Vector3.Distance(m_entity.GetFormationSlotWorldPosition(), m_entity.GetWorldPosition()) < formationConfiguration.GetFollowThreshold())
+                if ( m_entity.IsFormationSlotReached() )
                 {
                     m_entity.SetCurrentState<IdleEntityState>();
                 }
