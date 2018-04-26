@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 135055291841416862}
   - component: {fileID: 23266978692102434}
   - component: {fileID: 114802538594458306}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: FighterProxy
   m_TagString: Entity
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 4692888212207812}
   - component: {fileID: 33929490468991456}
   - component: {fileID: 23075666738996270}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Nose
   m_TagString: Untagged
   m_Icon: {fileID: 0}

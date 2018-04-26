@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4300065343852422}
   - component: {fileID: 33314208622975834}
   - component: {fileID: 23219577090151948}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Nose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 23167962385644122}
   - component: {fileID: 114032913460589856}
   - component: {fileID: 135106559192966902}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: RangerProxy
   m_TagString: Entity
   m_Icon: {fileID: 0}

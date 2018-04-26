@@ -2,8 +2,6 @@
 using System.Collections;
 using UnityEngine;
 
-// todo. make ortho top-down view, restore original perspective view
-
 /// <summary>
 /// Switches camera projection between orthographic and perspective.
 /// </summary>
@@ -32,15 +30,7 @@ public class OrthoPerspectiveSwitcher
  
     private NextSwitcherState m_nextState = NextSwitcherState.Perspective;
  
-    private void Awake()
-    {
-        var aspect = ( Screen.width + 0.0f ) / ( Screen.height + 0.0f );
- 
-        m_perspective = Matrix4x4.Perspective( fov, aspect, near, far );
-        m_ortho       = Matrix4x4.Ortho( -orthographicSize * aspect, orthographicSize * aspect, -orthographicSize, orthographicSize, near, far );
-    }
- 
-    private void Start()
+    private void Update()
     {
         var player                 = Finder.GetPlayer();
         var formationConfiguration = player.GetComponent< FormationConfiguration >();
@@ -48,11 +38,14 @@ public class OrthoPerspectiveSwitcher
         var gridWidth              = formationConfiguration.GetSlotDistance().x * formationConfiguration.GetGridSize().X;
         var gridHeight             = formationConfiguration.GetSlotDistance().y * formationConfiguration.GetGridSize().Z;
 
-        orthographicSize = Mathf.Max( gridHeight, gridWidth );
-    }
+        // divide grid size by two, because of left = -orthographicSize and right = +orthographicSize
+        orthographicSize = Mathf.Max( gridHeight / 2.0f, gridWidth / 2.0f );
+        
+        var aspect = ( Screen.width + 0.0f ) / ( Screen.height + 0.0f );
+ 
+        m_perspective = Matrix4x4.Perspective( fov, aspect, near, far );
+        m_ortho       = Matrix4x4.Ortho( -orthographicSize * aspect, orthographicSize * aspect, -orthographicSize, orthographicSize, near, far );
 
-    private void Update()
-    {
         // check if state has changed, update matrix accordingly
         switch ( m_nextState )
         {
