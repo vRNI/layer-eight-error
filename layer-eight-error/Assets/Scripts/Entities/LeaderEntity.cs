@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(FormationConfiguration))]
@@ -14,7 +15,12 @@ public class LeaderEntity : BaseEntity {
         private set { }
     }
 
-	// Use this for initialization
+    public override bool IsDead()
+    {
+        return m_formationConfiguration.GetUnderlingUnits().All( a_x => a_x.IsDead() );
+    }
+
+    // Use this for initialization
 	void Start () {
 		
 	}

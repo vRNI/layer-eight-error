@@ -35,7 +35,7 @@ public class EnemyDetector : MonoBehaviour
         {
             // Get Leader State Machine -> is not null;
             var entity = other.gameObject.GetComponent<LeaderEntity>();
-            if (entity != null)
+            if (entity != null && entity.IsDead() == false)
             {
                 if (other.gameObject != Finder.GetPlayer())
                 {
@@ -55,7 +55,7 @@ public class EnemyDetector : MonoBehaviour
         else
         {
             var entity = other.gameObject.GetComponent<LeaderEntity>();
-            if (entity != null)
+            if (entity != null && entity.IsDead() == false)
             {
                 if (other.gameObject != Finder.GetPlayer())
                 {

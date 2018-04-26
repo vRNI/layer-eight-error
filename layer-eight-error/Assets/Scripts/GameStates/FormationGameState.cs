@@ -75,8 +75,22 @@ public class FormationGameState
         }
 
         // deactivate all entities
-        var entities              = Finder.GetEntityManager().GetUnderlings();
-        foreach ( var entity in entities )
+        foreach ( var entity in Finder.GetEntityManager().GetUnderlings() )
+        {
+            // own entities are replaced by proxies
+            if ( entity.GetLeader() == Finder.GetPlayer() )
+            {
+                entity.gameObject.SetActive( false );
+            }
+            else // only render enemies -> deactivate all behaviors
+            {
+                foreach ( var component in entity.GetComponents< Behaviour >() )
+                {
+                    component.enabled = false;
+                }
+            }
+        }
+        foreach (var entity in Finder.GetEntityManager().GetDeadUnderlings() )
         {
             entity.gameObject.SetActive( false );
         }
@@ -208,8 +222,21 @@ public class FormationGameState
     public override void Exit()
     {
         // re-activate all entities
-        var entities              = Finder.GetEntityManager().GetUnderlings();
-        foreach ( var entity in entities )
+        foreach ( var entity in Finder.GetEntityManager().GetUnderlings() )
+        {
+            if ( entity.GetLeader() == Finder.GetPlayer() )
+            {
+                entity.gameObject.SetActive( true );
+            }
+            else // only render enemies -> deactivate all behaviors
+            {
+                foreach ( var component in entity.GetComponents< Behaviour >() )
+                {
+                    component.enabled = true;
+                }
+            }
+        }
+        foreach (var entity in Finder.GetEntityManager().GetDeadUnderlings() )
         {
             entity.gameObject.SetActive( true );
         }

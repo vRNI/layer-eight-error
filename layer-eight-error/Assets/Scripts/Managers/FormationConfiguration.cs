@@ -116,11 +116,22 @@ public class FormationConfiguration
     /// Adds an entity to the formation.
     /// </summary>
     /// <param name="a_entity">
-    /// The entity.
+    /// The entity to add.
     /// </param>
     public void AddUnderlingEntity( UnderlingEntity a_entity )
     {
         m_underlingUnits.Add( a_entity );
+    }
+
+    /// <summary>
+    /// Removes an entity from the formation.
+    /// </summary>
+    /// <param name="a_entity">
+    /// The entity to remove.
+    /// </param>
+    public void RemoveUnderlingEntity( UnderlingEntity a_entity )
+    {
+        m_underlingUnits.Remove( a_entity );
     }
 
     /// <summary>

@@ -177,6 +177,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7100808aa0d15bf40a5d51957c2ba17e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_healthPoints: 3
+  m_attackRange: 3
+  m_attackPoints: 1
+  m_attackAngle: 360
+  m_attackDuration: 2
+  m_attackCooldown: 5
   m_entityType: 3
   m_idleLookRotationSyncMaxDuration: 3
   m_formationLeader: {fileID: 0}

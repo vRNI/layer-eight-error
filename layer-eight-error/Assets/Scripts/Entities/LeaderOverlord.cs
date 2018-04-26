@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeaderOverlord : LeaderEntity {
+public class LeaderOverlord
+    : LeaderEntity
+{
+    public override bool IsDead()
+    {
+        return m_healthPoints <= 0;
+    }
 
-    [SerializeField] int m_attackpoints;
-
-	// Use this for initialization
+    // Use this for initialization
 	void Start () {
 		
 	}

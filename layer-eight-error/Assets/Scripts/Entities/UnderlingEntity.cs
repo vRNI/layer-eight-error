@@ -1,17 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 [RequireComponent(typeof(EntityStateManager))]
 public class UnderlingEntity : BaseEntity {
 
-    [Serializable]
-    protected struct UnderlingStats
-    {
-        public int m_healthPoints, m_attackPoints;
-        public float m_attackRange, m_attackAngle;
-    }
     BaseEntity m_target;
 
     [SerializeField]
@@ -19,8 +12,6 @@ public class UnderlingEntity : BaseEntity {
     protected EntityStateManager m_entityStateManager;
     [SerializeField]
     protected Position2 m_formationSlot;
-    [ SerializeField ]
-    protected UnderlingStats m_underlingStats;
     [SerializeField]
     protected bool m_isFriendly;
     public bool IsFriendly { get { return m_isFriendly; } }
@@ -30,12 +21,13 @@ public class UnderlingEntity : BaseEntity {
     void Start () {
         m_formationLeader.GetComponent<LeaderEntity>().GetFormationConfiguration().AddUnderlingEntity(this);
         Debug.Log(m_formationLeader.GetComponent<FormationConfiguration>().GetUnderlingUnits().Count);
-        m_underlingStats.m_healthPoints = 100;
     }
 	
 	// Update is called once per frame
-	void Update () {
-	    if (m_underlingStats.m_healthPoints <= 0
+	protected override void Update () {
+        base.Update();
+
+	    if (m_healthPoints <= 0
 	        && m_formationLeader != null) // already dead
 	    {
            Die();
@@ -106,8 +98,13 @@ public class UnderlingEntity : BaseEntity {
         m_navMeshAgent.SetDestination(m_target.gameObject.transform.position);
     }
 
-    public virtual void AttackTarget()
+    public override void AttackTarget()
     {
+        if ( CanAttackTarget() == false ) { return; }
+
+        // timer reset
+        base.AttackTarget();
+
         m_target.ReceiveDamage(m_attackPoints);
         Debug.Log(m_attackPoints + " were inflicted.");
     }
@@ -152,12 +149,10 @@ public class UnderlingEntity : BaseEntity {
     {
         return m_formationLeader;
     }
-
-    protected virtual void Attack() { }
-
-
+    
     protected virtual void Die()
     {
+        m_formationLeader.GetComponent<LeaderEntity>().GetFormationConfiguration().RemoveUnderlingEntity( this );
         m_formationLeader = null;
         SetCurrentState<DeadEntityState>();
     }

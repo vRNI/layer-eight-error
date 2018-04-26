@@ -30,6 +30,8 @@ public class FollowSquad : MonoBehaviour {
             count++;
         }
 
+        if ( count == 0 ) { return Vector3.zero; }
+
         sum /= count;
 
         return sum;

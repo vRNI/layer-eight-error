@@ -10,6 +10,9 @@ public class AttackingEntityState : EntityState
     public override void Enter()
     {
         base.Enter();
+
+        timeToExit = m_entity.AttackDuration;
+
         //var target = Finder.GetEntityManager().GetNearestEntity(m_entity.GetWorldPosition(), m_entity.IsFriendly);
         //m_entity.SetTarget(target);
         /// we assume we already know the target
@@ -25,12 +28,15 @@ public class AttackingEntityState : EntityState
 
     public override void Update()
     {
+        // attack finished
         if (timePassed >= timeToExit)
         {
             m_entity.SetCurrentState<WalkEntityState>();
             timePassed = 0;
             return;
         }
+
+        // continue waiting
         base.Update();
         // play attack();
 

@@ -28,6 +28,11 @@ public class EntityManager : MonoBehaviour {
         return underlingEntities;
     }
 
+    public List<UnderlingEntity> GetDeadUnderlings()
+    {
+        return deadUnderlingEntities;
+    }
+
     public void RemoveUnderling(UnderlingEntity a)
     {
         underlingEntities.Remove(a);

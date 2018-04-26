@@ -42,7 +42,14 @@ public class BaseEntity : MonoBehaviour {
     [SerializeField]
     protected float m_attackAngle;
     public float AttackAngle { get { return m_attackAngle; } set { m_attackAngle = value; } }
-
+    [ Tooltip( "Duration of one attack." ) ]
+    [SerializeField]
+    protected float m_attackDuration;
+    public float AttackDuration { get { return m_attackDuration; } set { m_attackDuration = value; } }
+    [ Tooltip( "Duration between two attacks." ) ]
+    [SerializeField]
+    protected float m_attackCooldown;
+    public float AttackCooldown { get { return m_attackCooldown; } set { m_attackCooldown = value; } }
 
     [ SerializeField ]
     protected EntityType m_entityType;
@@ -53,6 +60,8 @@ public class BaseEntity : MonoBehaviour {
     protected bool m_isHostile;
     public bool IsHostile { get { return m_isHostile; } set { m_isHostile = value; } }
     
+    private float m_attackTimer = 0.0f;
+
     public EntityType GetEntityType()
     {
         return m_entityType; // move type to each explicit class
@@ -63,14 +72,33 @@ public class BaseEntity : MonoBehaviour {
         return m_idleLookRotationSyncMaxDuration;
     }
 
+    /// <summary>
+    /// Checks whether the entity can launch an attack or not.
+    /// </summary>
+    public bool CanAttackTarget()
+    {
+        return m_attackTimer > m_attackDuration;
+    }
+
+    public virtual void AttackTarget()
+    {
+        // reset attack timer
+        m_attackTimer = 0.0f;
+    }
+
+    public virtual bool IsDead()
+    {
+        return m_healthPoints <= 0;
+    }
+
     // Use this for initialization
     void Start () {
 		
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
+	protected virtual void Update () {
+		m_attackTimer += Time.deltaTime;
 	}
 
     protected virtual void Awake()
