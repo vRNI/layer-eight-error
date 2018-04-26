@@ -7,6 +7,13 @@ public class BattleGameState : GameState {
 
     static UnityAction listener;
 
+    bool m_areAlliesSeekingFormationSlot;
+
+    public void SetAreareAlliesSeekingFormationSlot( bool a_value )
+    {
+        m_areAlliesSeekingFormationSlot = a_value;
+    }
+
     public BattleGameState()
     {
         listener = new UnityAction(TriggerTransition<IdleGameState>);
@@ -28,11 +35,22 @@ public class BattleGameState : GameState {
         
         if ( Input.GetButtonDown( AxisName.ForceFormationSlotPosition ) == true )
         {
-            foreach( var underling in Finder.GetPlayer().GetComponent< FormationConfiguration >().GetUnderlingUnits() )
+            if ( m_areAlliesSeekingFormationSlot == false )
             {
-                underling.SetCurrentState<SeekFormationSlotPositionState>();
+                foreach( var underling in Finder.GetPlayer().GetComponent< FormationConfiguration >().GetUnderlingUnits() )
+                {
+                    underling.SetCurrentState<SeekFormationSlotPositionState>();
+                    m_areAlliesSeekingFormationSlot = true;
+                }
             }
-            return;
+            else
+            {
+                foreach( var underling in Finder.GetPlayer().GetComponent< FormationConfiguration >().GetUnderlingUnits() )
+                {
+                    underling.SetCurrentState<WalkEntityState>();
+                    m_areAlliesSeekingFormationSlot = false;
+                }
+            }
         }
     }
 }

@@ -40,6 +40,12 @@ public class SeekFormationSlotPositionState : EntityState {
             if ( areAllEntitiesInFormation )
             {
                 m_entity.SetCurrentState< WalkEntityState >();
+                // notify battle game state that seeking is done
+                var battleGameState = Finder.GetGameStateManager().GetCurrentState() as BattleGameState;
+                if ( battleGameState != null )
+                {
+                    battleGameState.SetAreareAlliesSeekingFormationSlot( false );
+                }
             }
             else
             {
