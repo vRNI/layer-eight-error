@@ -1,7 +1,8 @@
 
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+ using System.Linq;
+ using UnityEngine;
  using UnityEngine.AI;
 
 [RequireComponent(typeof(EntityStateManager))]
@@ -173,8 +174,7 @@ public class UnderlingEntity : BaseEntity {
         SetCurrentState<SeekFormationSlotPositionState>();
 
         // update formation collider size
-        var formationBoundsUpdater = Finder.GetPlayer().GetComponentInChildren< FormationBoundsUpdater >();
-        formationBoundsUpdater.UpdateFormationBoundingBox();
+        FollowSquad.UpdateFormationBoundingBox( Finder.GetPlayer() );
     }
     
     public float GetDistanceToTarget()

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ DisallowMultipleComponent ]
+[ RequireComponent( typeof( FormationBoundsUpdater ) ) ]
 public class EnemyDetector : MonoBehaviour
 {
     bool enemyDetected = false;
@@ -17,7 +19,7 @@ public class EnemyDetector : MonoBehaviour
             if (!enemyDetected)
             {
                 EventManager.TriggerEvent("TransitionIdleState");
-                // change
+                // change back from battle state
                 Finder.GetPlayer().GetComponent<LeaderOverlord>().SetUnderlingsHostility(false);
             }
         }
@@ -33,11 +35,12 @@ public class EnemyDetector : MonoBehaviour
 
         if ( gameStateManager.IsCurrentState< IdleGameState >() )
         {
-            var parentTransform = other.gameObject.GetComponent< Transform >().parent;
-            if ( parentTransform == null ) { return; }
-
+            var followSquad     = other.gameObject.GetComponent< FollowSquad >();
+            if ( followSquad == null ) { return; }
+            var formationLeader = followSquad.GetFormationLeader();
+            if ( formationLeader == null ) { return; }
             // Get Leader State Machine -> is not null;
-            var entity = parentTransform.GetComponent<LeaderEntity>();
+            var entity = formationLeader.GetComponent<LeaderEntity>();
             if (entity != null && entity.IsDead() == false)
             {
                 if (entity != Finder.GetPlayer())

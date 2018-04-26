@@ -5,12 +5,22 @@ using UnityEngine;
 public class FormationBoundsUpdater
     : MonoBehaviour
 {
+    [ Tooltip( "The formation leader this bounds updater belongs to." ) ]
+    [ SerializeField ]
+    private GameObject m_formationLeader;
+
     private bool m_isFirstUpdate = true;
 
     private void Update()
     {
-        if ( m_isFirstUpdate == false ) { return; }
+        if ( m_formationLeader == null )
+        {
+            Object.Destroy( gameObject );
+            return;
+        }
 
+        if ( m_isFirstUpdate == false ) { return; }
+        
         UpdateFormationBoundingBox();
         m_isFirstUpdate = true;
     }
@@ -20,6 +30,9 @@ public class FormationBoundsUpdater
     /// </summary>
     public void UpdateFormationBoundingBox()
     {
+        // ignore if formation leader no longer exists
+        if ( m_formationLeader == null ) { return; }
+
         // update enemy detector collider size
         var detectorCollider = GetComponent< BoxCollider >();
         if( detectorCollider != null )
@@ -30,7 +43,7 @@ public class FormationBoundsUpdater
             var bottom = int.MaxValue;
             var top    = int.MinValue;
 
-            var formationConfiguration = transform.parent.GetComponent< FormationConfiguration >();
+            var formationConfiguration = m_formationLeader.GetComponent< FormationConfiguration >();
             var slotDistance           = formationConfiguration.GetSlotDistance();
 
             foreach ( var entity in formationConfiguration.GetUnderlingUnits() )

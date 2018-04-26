@@ -1,25 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
+[ RequireComponent( typeof( FormationBoundsUpdater ) ) ]
 public class FollowSquad : MonoBehaviour {
-
-    private FormationConfiguration m_formationConfiguration;
-	// Use this for initialization
-	void Start () {
-        m_formationConfiguration = GetComponent<FormationConfiguration>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        var newPosition = CalculateAveragePositionViaUnderlings();
-        // set leader position as average of alive underlings
-        transform.position = newPosition;
-	}
-
-    Vector3 CalculateAveragePositionViaUnderlings()
+    
+    [ Tooltip( "The formation leader that should be followed." ) ]
+    [ SerializeField ]
+    private GameObject m_formationLeader;
+    
+    public GameObject GetFormationLeader()
     {
-        var underlings = m_formationConfiguration.GetUnderlingUnits();
+        return m_formationLeader;
+    }
+
+    // Update is called once per frame
+    private void Update ()
+    {
+        if ( m_formationLeader == null )
+        {
+            Object.Destroy( gameObject );
+            return;
+        }
+
+        // set leader position as average of alive underlings
+        transform.position = CalculateAveragePositionViaUnderlings();
+        transform.rotation = m_formationLeader.GetComponent< Transform >().rotation;
+    }
+
+    private Vector3 CalculateAveragePositionViaUnderlings()
+    {
+        var underlings = m_formationLeader.GetComponent< FormationConfiguration >().GetUnderlingUnits();
         Vector3 sum = Vector3.zero;
         int count = 0;
 
@@ -35,5 +47,19 @@ public class FollowSquad : MonoBehaviour {
         sum /= count;
 
         return sum;
+    }
+
+    public static void UpdateFormationBoundingBox( GameObject a_formationLeader )
+    {
+        var followSquads               = Object.FindObjectsOfType< FollowSquad >();
+        var followSquad                = followSquads.SingleOrDefault( a_x => a_x.GetFormationLeader() == a_formationLeader );
+        if ( followSquad != null )
+        {
+            var formationBoundsUpdater = followSquad.GetComponent< FormationBoundsUpdater >();
+            if ( formationBoundsUpdater != null )
+            {
+                formationBoundsUpdater.UpdateFormationBoundingBox();
+            }
+        }
     }
 }
