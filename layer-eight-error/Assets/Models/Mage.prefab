@@ -41,7 +41,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4619323601844356}
   - component: {fileID: 33799530173673746}
-  - component: {fileID: 136849943919217332}
   - component: {fileID: 23511723786375298}
   m_Layer: 0
   m_Name: Nose
@@ -196,19 +195,6 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1842211011145934}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &136849943919217332
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1864097896612796}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1

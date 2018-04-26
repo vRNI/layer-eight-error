@@ -49,16 +49,16 @@ public class EntityManager : MonoBehaviour {
         deadUnderlingEntities.Remove(a);
     }
 
-    public UnderlingEntity GetNearestEntity(Vector3 a_entityPosition, bool isFriendly)
+    public BaseEntity GetNearestEntity(Vector3 a_entityPosition, bool isFriendly)
     {
         return SelectMinDistanceEntity(a_entityPosition, isFriendly);
     }
 
-    public UnderlingEntity SelectMinDistanceEntity(Vector3 a_entityPosition, bool isFriendly)
+    public BaseEntity SelectMinDistanceEntity(Vector3 a_entityPosition, bool isFriendly)
     {
         float closestDistance = float.MaxValue;
         float currentDistance = float.MaxValue;
-        UnderlingEntity closestEntity = null;
+        BaseEntity closestEntity = null;
 
         foreach(UnderlingEntity uE in underlingEntities)
         {
@@ -70,6 +70,11 @@ public class EntityManager : MonoBehaviour {
                 closestDistance = currentDistance;
                 closestEntity = uE;
             }
+        }
+
+        if ( closestEntity == null && isFriendly == false )
+        {
+            closestEntity = Finder.GetPlayer().GetComponent< LeaderOverlord >();
         }
 
         return closestEntity;

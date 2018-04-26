@@ -130,7 +130,9 @@ public class BaseEntity : MonoBehaviour {
 
     public virtual void ReceiveDamage(int damageValue)
     {
-        
+        m_healthPoints -= damageValue;
+        // if <= 0 -> dead entity
+        // to list -> dead entities
     }
 
     public virtual void StopWalking()

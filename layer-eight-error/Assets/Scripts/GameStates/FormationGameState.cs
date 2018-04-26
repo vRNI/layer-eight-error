@@ -261,38 +261,9 @@ public class FormationGameState
         cameraOrbitScript.AreControlsEnabled = true;
         cameraOrbitScript.LocalRotation      = m_originalOrbitRotation;
         
-        // update enemy detector collider size
-        var detectorCollider = Finder.GetPlayer().GetComponentInChildren< EnemyDetector >().GetComponent< BoxCollider >();
-        if( detectorCollider != null )
-        {
-            // calculate current formation width and height
-            var left   = int.MaxValue;
-            var right  = int.MinValue;
-            var bottom = int.MaxValue;
-            var top    = int.MinValue;
-
-            var formationConfiguration = Finder.GetPlayer().GetComponent< FormationConfiguration >();
-            var slotDistance           = formationConfiguration.GetSlotDistance();
-
-            foreach ( var entity in formationConfiguration.GetUnderlingUnits() )
-            {
-                // update slot position boundaries
-                var slotPosition = entity.GetFormationSlot();
-                left   = Mathf.Min( left, slotPosition.X );
-                right  = Mathf.Max( right, slotPosition.X );
-                bottom = Mathf.Min( bottom, slotPosition.Z );
-                top    = Mathf.Max( top, slotPosition.Z );
-            }
-
-            var width   = ( right - left + 2 ) * slotDistance.x;
-            var height  = ( top - bottom + 2 ) * slotDistance.y;
-            // calculate center by dividing by 2
-            var centerX = ( right + left ) * slotDistance.x / 2.0f;
-            var centerZ = ( top + bottom ) * slotDistance.y / 2.0f;
-
-            detectorCollider.center = new Vector3( centerX, 0.0f, centerZ );
-            detectorCollider.size   = new Vector3( width, detectorCollider.size.y, height );
-        }
+        // update formation collider size
+        var formationBoundsUpdater = Finder.GetPlayer().GetComponentInChildren< FormationBoundsUpdater >();
+        formationBoundsUpdater.UpdateFormationBoundingBox();
 
         base.Exit();
     }

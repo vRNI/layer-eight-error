@@ -19,20 +19,21 @@ public class UnderlingEntity : BaseEntity {
     public bool IsFriendly { get { return m_isFriendly; } }
     
 
-    // Use this for initialization
-    void Start () {
+    private void Start()
+    {
+        // add to formation configuration in start, because formation leader is not set in awake
         m_formationLeader.GetComponent<LeaderEntity>().GetFormationConfiguration().AddUnderlingEntity(this);
     }
-	
-	// Update is called once per frame
-	protected override void Update () {
+    
+    // Update is called once per frame
+    protected override void Update () {
         base.Update();
 
-	    if (m_healthPoints <= 0
-	        && m_formationLeader != null) // already dead
-	    {
+        if (m_healthPoints <= 0
+            && m_formationLeader != null) // already dead
+        {
            Die();
-	    }
+        }
     }
 
     protected override void Awake()
@@ -171,15 +172,12 @@ public class UnderlingEntity : BaseEntity {
         m_healthPoints = 100;
         GetComponent<NavMeshAgent>().enabled = true;
         SetCurrentState<SeekFormationSlotPositionState>();
-    }
 
-    public override void ReceiveDamage(int damageValue)
-    {
-        m_healthPoints -= damageValue;
-        // if <= 0 -> dead entity
-        // to list -> dead entities
+        // update formation collider size
+        var formationBoundsUpdater = Finder.GetPlayer().GetComponentInChildren< FormationBoundsUpdater >();
+        formationBoundsUpdater.UpdateFormationBoundingBox();
     }
-
+    
     public float GetDistanceToTarget()
     {
         return Vector3.Distance(this.GetWorldPosition(), m_target.GetWorldPosition());
