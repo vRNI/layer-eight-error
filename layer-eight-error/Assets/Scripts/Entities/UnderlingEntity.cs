@@ -12,7 +12,6 @@ public class UnderlingEntity : BaseEntity {
         public int m_healthPoints, m_attackPoints;
         public float m_attackRange, m_attackAngle;
     }
-
     BaseEntity m_target;
 
     [SerializeField]
@@ -20,8 +19,7 @@ public class UnderlingEntity : BaseEntity {
     protected EntityStateManager m_entityStateManager;
     [SerializeField]
     protected Position2 m_formationSlot;
-    
-    [SerializeField]
+    [ SerializeField ]
     protected UnderlingStats m_underlingStats;
     [SerializeField]
     protected bool m_isFriendly;
@@ -82,7 +80,7 @@ public class UnderlingEntity : BaseEntity {
         var formationConfiguration = m_formationLeader.GetComponent<LeaderEntity>().GetFormationConfiguration();
         var currentLeaderPosition = Finder.GetCurrentPosition(m_formationLeader);
         var desiredLeaderPosition = Finder.GetDesiredPosition(m_formationLeader);
-        var desiredDirection = ClampToMaxDistance(desiredLeaderPosition - currentLeaderPosition, formationConfiguration.GetFollowMaxDistance());
+        var desiredDirection = ClampToMaxLengthPlanar(desiredLeaderPosition - currentLeaderPosition, formationConfiguration.GetFollowMaxDistance());
         var leaderRotationY = m_formationLeader.GetComponent<Transform>().eulerAngles.y;
         var slotOffset = formationConfiguration.GetSlotOffset(m_formationSlot);
         var slotOffsetRotated = Quaternion.AngleAxis(leaderRotationY, Vector3.up) * slotOffset;
@@ -98,9 +96,20 @@ public class UnderlingEntity : BaseEntity {
         m_navMeshAgent.SetDestination(target);
     }
 
+    public virtual bool IsFormationSlotReached()
+    {
+        return Vector3.Distance( GetFormationSlotWorldPosition(), GetWorldPosition() ) < m_formationLeader.GetComponent<LeaderEntity>().GetFormationConfiguration().GetFollowThreshold();
+    }
+
     public virtual void SeekTargetPosition()
     {
         m_navMeshAgent.SetDestination(m_target.gameObject.transform.position);
+    }
+
+    public virtual void AttackTarget()
+    {
+        m_target.ReceiveDamage(m_attackPoints);
+        Debug.Log(m_attackPoints + " were inflicted.");
     }
 
     public virtual void SetTarget(BaseEntity a_entity)
@@ -113,11 +122,29 @@ public class UnderlingEntity : BaseEntity {
         return m_target;
     }
 
-    private static Vector3 ClampToMaxDistance(Vector3 a_vector, float a_maxDistance)
+    /// <summary>
+    /// Clamps the vector to a maximal distance on the XZ 2D plane.
+    /// </summary>
+    /// <param name="a_vector">
+    /// The vector to clamp.
+    /// </param>
+    /// <param name="a_maxDistance">
+    /// The max vector length.
+    /// </param>
+    /// <returns>
+    /// The clamped vector.
+    /// </returns>
+    private static Vector3 ClampToMaxLengthPlanar( Vector3 a_vector, float a_maxDistance )
     {
-        var length = Vector3.Distance(a_vector, Vector3.zero);
-        if (length > a_maxDistance) { return a_vector * a_maxDistance / length; }
-
+        // calculate distance on XZ plane
+        var length    = Vector3.Distance( a_vector, new Vector3( 0.0f, a_vector.y, 0.0f ) );
+        // clamp on XZ plane
+        if ( length > a_maxDistance )
+        {
+            var scale = a_maxDistance / length;
+            return new Vector3( a_vector.x * scale, a_vector.y, a_vector.z * scale );
+        }
+        
         return a_vector;
     }
 
@@ -133,5 +160,17 @@ public class UnderlingEntity : BaseEntity {
     {
         m_formationLeader = null;
         SetCurrentState<DeadEntityState>();
+    }
+
+    public override void ReceiveDamage(int damageValue)
+    {
+        m_healthPoints -= damageValue;
+        // if <= 0 -> dead entity
+        // to list -> dead entities
+    }
+
+    public float GetDistanceToTarget()
+    {
+        return Vector3.Distance(this.GetWorldPosition(), m_target.GetWorldPosition());
     }
 }

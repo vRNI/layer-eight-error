@@ -29,7 +29,21 @@ public enum EntityType
 [RequireComponent(typeof(NavMeshAgent))]
 [DisallowMultipleComponent]
 public class BaseEntity : MonoBehaviour {
-    
+
+    [SerializeField]
+    protected int m_healthPoints;
+    public int HealthPoints { get { return m_healthPoints; } set { m_healthPoints = value; } }
+    [SerializeField]
+    protected float m_attackRange;
+    public float AttackRange { get { return m_attackRange; } set { m_attackRange = value; } }
+    [SerializeField]
+    protected int m_attackPoints;
+    public int AttackPoints { get { return m_attackPoints; } set { m_attackPoints = value; } }
+    [SerializeField]
+    protected float m_attackAngle;
+    public float AttackAngle { get { return m_attackAngle; } set { m_attackAngle = value; } }
+
+
     [ SerializeField ]
     protected EntityType m_entityType;
     [ Tooltip( "The maximal duration it takes until the entity and formation leader look rotation are synced." ) ]
@@ -67,5 +81,32 @@ public class BaseEntity : MonoBehaviour {
     public Vector3 GetWorldPosition()
     {
         return gameObject.GetComponent<Transform>().position;
+    }
+
+    public bool HasNavMeshStoppedMoving()
+    {
+        // Check if we've reached the destination
+        if (!m_navMeshAgent.pathPending)
+        {
+            if (m_navMeshAgent.remainingDistance <= m_navMeshAgent.stoppingDistance)
+            {
+                if (!m_navMeshAgent.hasPath || m_navMeshAgent.velocity.sqrMagnitude == 0f)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public virtual void ReceiveDamage(int damageValue)
+    {
+        
+    }
+
+    public virtual void StopWalking()
+    {
+        m_navMeshAgent.SetDestination(Finder.GetCurrentPosition(gameObject));
     }
 }

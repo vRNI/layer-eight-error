@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LeaderOverlord : LeaderEntity {
 
-    [SerializeField] int m_healthPoints, m_attackpoints;
+    [SerializeField] int m_attackpoints;
 
 	// Use this for initialization
 	void Start () {

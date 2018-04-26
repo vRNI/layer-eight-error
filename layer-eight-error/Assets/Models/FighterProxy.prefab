@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4427111677703152}
   - component: {fileID: 33228945232919406}
-  - component: {fileID: 136875638801496374}
+  - component: {fileID: 135055291841416862}
   - component: {fileID: 23266978692102434}
   - component: {fileID: 114802538594458306}
   m_Layer: 0
@@ -39,7 +39,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4692888212207812}
   - component: {fileID: 33929490468991456}
-  - component: {fileID: 136165357328210918}
   - component: {fileID: 23075666738996270}
   m_Layer: 0
   m_Name: Nose
@@ -165,21 +164,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_entityType: 1
---- !u!136 &136165357328210918
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1677057103806598}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &136875638801496374
-CapsuleCollider:
+--- !u!135 &135055291841416862
+SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -187,7 +173,6 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
+  serializedVersion: 2
+  m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}

@@ -140,6 +140,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7100808aa0d15bf40a5d51957c2ba17e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_healthPoints: 0
+  m_attackRange: 1
+  m_attackPoints: 0
+  m_attackAngle: 0
   m_entityType: 1
   m_idleLookRotationSyncMaxDuration: 1
   m_formationLeader: {fileID: 1907925492}
@@ -357,6 +361,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7100808aa0d15bf40a5d51957c2ba17e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_healthPoints: 0
+  m_attackRange: 1
+  m_attackPoints: 0
+  m_attackAngle: 0
   m_entityType: 1
   m_idleLookRotationSyncMaxDuration: 1
   m_formationLeader: {fileID: 1907925492}
@@ -595,6 +603,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7100808aa0d15bf40a5d51957c2ba17e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_healthPoints: 0
+  m_attackRange: 1
+  m_attackPoints: 0
+  m_attackAngle: 0
   m_entityType: 1
   m_idleLookRotationSyncMaxDuration: 1
   m_formationLeader: {fileID: 1907925492}
@@ -730,6 +742,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7100808aa0d15bf40a5d51957c2ba17e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_healthPoints: 0
+  m_attackRange: 1
+  m_attackPoints: 0
+  m_attackAngle: 0
   m_entityType: 1
   m_idleLookRotationSyncMaxDuration: 1
   m_formationLeader: {fileID: 1907925492}
@@ -950,7 +966,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enabled: 1
-  m_areControlsEnabled: 0
+  m_areControlsEnabled: 1
   m_localRotation: {x: 0, y: 45, z: 0}
   m_sensitivityX: 5
   m_sensitivityY: 5
@@ -992,6 +1008,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7100808aa0d15bf40a5d51957c2ba17e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_healthPoints: 0
+  m_attackRange: 1
+  m_attackPoints: 0
+  m_attackAngle: 0
   m_entityType: 1
   m_idleLookRotationSyncMaxDuration: 1
   m_formationLeader: {fileID: 1907925492}
@@ -1284,6 +1304,7 @@ GameObject:
   - component: {fileID: 1848497608}
   - component: {fileID: 1848497611}
   - component: {fileID: 1848497612}
+  - component: {fileID: 1848497613}
   m_Layer: 2
   m_Name: EnemyLeader
   m_TagString: Untagged
@@ -1356,6 +1377,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59f52a12d0c353b47b78f4be3a49b855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_healthPoints: 0
+  m_attackRange: 0
+  m_attackPoints: 0
+  m_attackAngle: 0
   m_entityType: 0
   m_idleLookRotationSyncMaxDuration: 1
 --- !u!135 &1848497612
@@ -1370,6 +1395,17 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 15.49
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1848497613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1848497607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15bcb63e14be39c40817ee035b34b596, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1870644270
 Prefab:
   m_ObjectHideFlags: 0
@@ -1574,7 +1610,7 @@ MonoBehaviour:
     X: 9
     Z: 9
   m_slotDistance: {x: 2, y: 2}
-  m_followThreshold: 0.2
+  m_followThreshold: 0.5
   m_followMaxDistance: 2
 --- !u!114 &1907925501
 MonoBehaviour:
@@ -1598,9 +1634,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6692c0fa26e43b44391f78d9f6b060a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_healthPoints: 0
+  m_attackRange: 0
+  m_attackPoints: 0
+  m_attackAngle: 0
   m_entityType: 0
   m_idleLookRotationSyncMaxDuration: 1
-  m_healthPoints: 0
   m_attackpoints: 0
 --- !u!1 &2129028327
 GameObject:
