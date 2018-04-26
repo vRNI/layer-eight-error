@@ -37,6 +37,13 @@ public class WalkEntityState
             }
 
             m_entity.SeekTargetPosition();
+
+            // if distance_threshold > distance -> switch to attack state;
+            // and attack angle -> adjust rotation, and so on;
+            if (m_entity.GetDistanceToTarget() < m_entity.AttackRange)
+            {
+                m_entity.SetCurrentState<AttackingEntityState>();
+            }
         }
         else
         {
@@ -46,7 +53,7 @@ public class WalkEntityState
             if (formationConfiguration.IsValid(formationSlot))
             {
                 // check if slot needs to be followed
-                if (Vector3.Distance(m_entity.GetFormationSlotWorldPosition(), m_entity.GetWorldPosition()) < formationConfiguration.GetFollowThreshold())
+                if ( m_entity.IsFormationSlotReached() )
                 {
                     m_entity.SetCurrentState<IdleEntityState>();
                 }

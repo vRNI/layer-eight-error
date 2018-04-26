@@ -1,6 +1,7 @@
 
 ﻿using System.Collections.Generic;
-using UnityEngine;
+ using System.Linq;
+ using UnityEngine;
 
 /// <summary>
 /// Defines formation specific settings.
@@ -128,5 +129,13 @@ public class FormationConfiguration
     public List< UnderlingEntity > GetUnderlingUnits()
     {
         return m_underlingUnits;
+    }
+
+    /// <summary>
+    /// Gets all entities with valid formation slots.
+    /// </summary>
+    public UnderlingEntity[] GetUnderlingEntitiesWithValidFormationSlots()
+    {
+        return GetUnderlingUnits().Where( a_x => IsValid( a_x.GetFormationSlot() ) ).ToArray();
     }
 }

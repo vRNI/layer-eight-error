@@ -33,7 +33,7 @@ public class IdleEntityState
         if ( formationConfiguration.IsValid( formationSlot ) )
         {
             // check if slot needs to be followed
-            if ( Vector3.Distance( m_entity.GetFormationSlotWorldPosition(), m_entity.GetWorldPosition() ) > formationConfiguration.GetFollowThreshold() )
+            if ( !m_entity.IsFormationSlotReached() )
             {
                 m_entity.SetCurrentState< WalkEntityState >();
                 m_rotationSyncTime          = 0.0f;

@@ -25,5 +25,14 @@ public class BattleGameState : GameState {
     public override void Update()
     {
         base.Update();
+        
+        if ( Input.GetButtonDown( AxisName.ForceFormationSlotPosition ) == true )
+        {
+            foreach( var underling in Finder.GetPlayer().GetComponent< FormationConfiguration >().GetUnderlingUnits() )
+            {
+                underling.SetCurrentState<SeekFormationSlotPositionState>();
+            }
+            return;
+        }
     }
 }
