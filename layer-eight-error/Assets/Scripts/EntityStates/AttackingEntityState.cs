@@ -17,6 +17,7 @@ public class AttackingEntityState : EntityState
         //m_entity.SetTarget(target);
         /// we assume we already know the target
         m_entity.StopWalking();
+        m_entity.GetComponent<AnimationInfo>().TriggerAttack();
         m_entity.AttackTarget();
         // kill momentum
     }
