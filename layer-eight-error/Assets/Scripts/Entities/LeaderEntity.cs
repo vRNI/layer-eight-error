@@ -19,19 +19,11 @@ public class LeaderEntity : BaseEntity {
     {
         return m_formationConfiguration.GetUnderlingUnits().All( a_x => a_x.IsDead() );
     }
-
-    // Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    private void Awake()
+    
+    protected override void Awake()
     {
+        base.Awake();
+
         m_formationConfiguration = gameObject.GetComponent<FormationConfiguration>();
     }
 

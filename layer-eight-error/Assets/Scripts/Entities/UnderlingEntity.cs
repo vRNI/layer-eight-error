@@ -25,18 +25,12 @@ public class UnderlingEntity : BaseEntity {
         // add to formation configuration in start, because formation leader is not set in awake
         m_formationLeader.GetComponent<LeaderEntity>().GetFormationConfiguration().AddUnderlingEntity(this);
     }
-    
-    // Update is called once per frame
-    protected override void Update () {
-        base.Update();
 
-        if (m_healthPoints <= 0
-            && m_formationLeader != null) // already dead
-        {
-           Die();
-        }
+    public override bool IsDead()
+    {
+        return m_healthPoints <= 0 && m_formationLeader != null;
     }
-
+    
     protected override void Awake()
     {
         base.Awake();
@@ -153,7 +147,7 @@ public class UnderlingEntity : BaseEntity {
         return m_formationLeader;
     }
     
-    protected virtual void Die()
+    protected override void Die()
     {
         m_formationLeader.GetComponent<LeaderEntity>().GetFormationConfiguration().RemoveUnderlingEntity( this );
         m_formationLeader = null;

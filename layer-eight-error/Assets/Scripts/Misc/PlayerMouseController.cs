@@ -19,6 +19,7 @@ public class PlayerMouseController
     private void Update () 
     {
         if ( Finder.GetGameStateManager().IsCurrentState< FormationGameState >() ) { return; }
+        if ( Finder.GetGameStateManager().IsCurrentState< FailGameState >() ) { return; }
         if ( Input.GetMouseButtonDown( MouseButtonIndex.Left ) )
         {
             // on hit set desired position

@@ -91,6 +91,10 @@ public class BaseEntity : MonoBehaviour {
         return m_healthPoints <= 0;
     }
 
+    protected virtual void Die()
+    {
+    }
+
     // Use this for initialization
     void Start () {
 		
@@ -98,6 +102,11 @@ public class BaseEntity : MonoBehaviour {
 	
 	// Update is called once per frame
 	protected virtual void Update () {
+        if ( IsDead() ) // already dead
+        {
+           Die();
+        }
+
 		m_attackTimer += Time.deltaTime;
 	}
 

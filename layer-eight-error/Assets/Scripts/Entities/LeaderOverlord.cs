@@ -10,18 +10,11 @@ public class LeaderOverlord
         return m_healthPoints <= 0;
     }
 
-    // Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    //void Die()
-    //{
-
-    //}
+    protected override void Die()
+    {
+        // change to fail state
+        Finder.GetGameStateManager().GetCurrentState().TriggerTransition< FailGameState >();
+        //// delete myself
+        //Object.Destroy( gameObject );
+    }
 }

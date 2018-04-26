@@ -42,7 +42,7 @@ public class FollowSquad : MonoBehaviour {
             count++;
         }
 
-        if ( count == 0 ) { return Vector3.zero; }
+        if ( count == 0 ) { return m_formationLeader.GetComponent< Transform >().position; }
 
         sum /= count;
 
