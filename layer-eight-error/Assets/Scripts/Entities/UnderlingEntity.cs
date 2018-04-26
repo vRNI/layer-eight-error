@@ -9,8 +9,8 @@ public class UnderlingEntity : BaseEntity {
     [Serializable]
     protected struct UnderlingStats
     {
-        int m_healthPoints, m_attackPoints;
-        float m_attackRange, m_attackAngle;
+        public int m_healthPoints, m_attackPoints;
+        public float m_attackRange, m_attackAngle;
     }
 
     BaseEntity m_target;
@@ -32,11 +32,16 @@ public class UnderlingEntity : BaseEntity {
     void Start () {
         m_formationLeader.GetComponent<LeaderEntity>().GetFormationConfiguration().AddUnderlingEntity(this);
         Debug.Log(m_formationLeader.GetComponent<FormationConfiguration>().GetUnderlingUnits().Count);
+        m_underlingStats.m_healthPoints = 100;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        
+	    if (m_underlingStats.m_healthPoints <= 0
+	        && m_formationLeader != null) // already dead
+	    {
+           Die();
+	    }
     }
 
     protected override void Awake()
@@ -122,8 +127,11 @@ public class UnderlingEntity : BaseEntity {
     }
 
     protected virtual void Attack() { }
+
+
     protected virtual void Die()
     {
-
+        m_formationLeader = null;
+        SetCurrentState<DeadEntityState>();
     }
 }
