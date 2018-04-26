@@ -33,11 +33,14 @@ public class EnemyDetector : MonoBehaviour
 
         if ( gameStateManager.IsCurrentState< IdleGameState >() )
         {
+            var parentTransform = other.gameObject.GetComponent< Transform >().parent;
+            if ( parentTransform == null ) { return; }
+
             // Get Leader State Machine -> is not null;
-            var entity = other.gameObject.GetComponent<LeaderEntity>();
+            var entity = parentTransform.GetComponent<LeaderEntity>();
             if (entity != null && entity.IsDead() == false)
             {
-                if (other.gameObject != Finder.GetPlayer())
+                if (entity != Finder.GetPlayer())
                 {
                     if (gameStateManager.GetCurrentState().GetType() != typeof(BattleGameState))
                     {
@@ -45,8 +48,8 @@ public class EnemyDetector : MonoBehaviour
                         Finder.GetPlayer().GetComponent<LeaderOverlord>().SetUnderlingsHostility(true);
                     }
 
-                    if (!other.gameObject.GetComponent<LeaderEntity>().IsHostile)
-                        other.gameObject.GetComponent<LeaderEntity>().SetUnderlingsHostility(true);
+                    if (!entity.IsHostile)
+                        entity.SetUnderlingsHostility(true);
 
                     enemyDetected = true;
                 }
