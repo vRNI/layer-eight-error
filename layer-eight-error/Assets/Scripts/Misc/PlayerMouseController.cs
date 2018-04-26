@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerMouseController
     : MonoBehaviour
@@ -28,5 +29,8 @@ public class PlayerMouseController
                 m_desiredPosition = hit.point + Finder.GetPlayerHeight() / 2.0f;
             }
         }
+
+        var agent = gameObject.GetComponent<NavMeshAgent>();
+        //Debug.Log(agent.velocity);
     }
 }

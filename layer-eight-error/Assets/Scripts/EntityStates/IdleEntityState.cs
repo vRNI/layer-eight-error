@@ -11,6 +11,12 @@ public class IdleEntityState
         
         if ( Finder.GetGameStateManager().IsCurrentState< FormationGameState >() ) { return; }
 
+        if (m_entity.IsHostile)
+        {
+            m_entity.SetCurrentState<WalkEntityState>();
+            return;
+        }
+
         var formationLeader                 = m_entity.GetLeader();
         var leaderTransform                 = formationLeader.GetComponent< Transform >();
         var entityTransform                 = m_entity.GetComponent< Transform >();
