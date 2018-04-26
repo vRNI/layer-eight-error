@@ -9,6 +9,7 @@ public class AnimationInfo : MonoBehaviour {
 
     [SerializeField] private float speed;
     [SerializeField] private bool hostile;
+
     // Use this for initialization
     void Start () {
         animator = GetComponent<Animator>();
@@ -16,7 +17,9 @@ public class AnimationInfo : MonoBehaviour {
 
     public void TriggerAttack()
     {
+        var rand = (int) Random.Range(0, 10);
         animator.SetTrigger("Attack");
+        animator.SetInteger("Random", rand);
     }
 	
 	// Update is called once per frame

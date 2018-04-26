@@ -105,6 +105,7 @@ public class UnderlingEntity : BaseEntity {
 
         // timer reset
         base.AttackTarget();
+        gameObject.GetComponent<AnimationInfo>().TriggerAttack();
 
         m_target.ReceiveDamage(m_attackPoints);
         Debug.Log(m_attackPoints + " were inflicted.");
