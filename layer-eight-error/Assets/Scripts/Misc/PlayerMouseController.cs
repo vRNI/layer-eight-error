@@ -39,8 +39,7 @@ public class PlayerMouseController
                 if (gameObject.GetComponent<UnderlingEntity>() != null
                 && gameObject.GetComponent<UnderlingEntity>().GetLeader() == null)
                 {
-                    Debug.Log("Dead Enemy Hit");
-                    //gameObject.GetComponent<UnderlingEntity>().Resurect();
+                    gameObject.GetComponent<UnderlingEntity>().Resurect();
                 }
             }
         }

@@ -107,7 +107,7 @@ public class FormationConfiguration
                 int slotX = x - ( m_gridSize.X - 1 ) / 2;
                 int slotZ = z - ( m_gridSize.Z - 1 ) / 2;
 
-                yield return new Position2( slotX, slotZ );
+                yield return new Position2( slotZ, slotX );
             }
         }
     }
@@ -156,5 +156,27 @@ public class FormationConfiguration
     public UnderlingEntity[] GetUnderlingEntitiesWithValidFormationSlots()
     {
         return GetUnderlingUnits().Where( a_x => IsValid( a_x.GetFormationSlot() ) ).ToArray();
+    }
+
+    public Position2 GetEmptyFormationSlot()
+    {
+        
+        var slots = EnumerateSlotPosition();
+        foreach (var position2 in slots)
+        {
+            bool occupied = false;
+
+            foreach (var underlingEntity in m_underlingUnits)
+            {
+                if (underlingEntity.GetFormationSlot().X == position2.X
+                    && underlingEntity.GetFormationSlot().Z == position2.Z)
+                {
+                    occupied = true;
+                }
+            }
+            if(!occupied)
+                return position2;
+        }
+        return Position2.invalid;
     }
 }
