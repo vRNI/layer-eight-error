@@ -1,6 +1,8 @@
+
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+ using UnityEngine.AI;
 
 [RequireComponent(typeof(EntityStateManager))]
 public class UnderlingEntity : BaseEntity {
@@ -155,6 +157,19 @@ public class UnderlingEntity : BaseEntity {
         m_formationLeader.GetComponent<LeaderEntity>().GetFormationConfiguration().RemoveUnderlingEntity( this );
         m_formationLeader = null;
         SetCurrentState<DeadEntityState>();
+    }
+    
+    public virtual void Resurect()
+    {
+        Debug.Log("Ressurect");
+        m_formationLeader = Finder.GetPlayer();
+        var formationConfiguration = m_formationLeader.GetComponent<LeaderOverlord>().GetFormationConfiguration();
+        var slotPos = formationConfiguration.GetEmptyFormationSlot();
+        SetFormationSlot(slotPos);
+        formationConfiguration.AddUnderlingEntity(this);
+        m_healthPoints = 100;
+        GetComponent<NavMeshAgent>().enabled = true;
+        SetCurrentState<SeekFormationSlotPositionState>();
     }
 
     public override void ReceiveDamage(int damageValue)

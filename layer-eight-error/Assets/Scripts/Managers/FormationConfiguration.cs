@@ -1,5 +1,5 @@
 
-﻿using System.Collections.Generic;
+﻿ using System.Collections.Generic;
  using System.Linq;
  using UnityEngine;
 
@@ -107,7 +107,7 @@ public class FormationConfiguration
                 int slotX = x - ( m_gridSize.X - 1 ) / 2;
                 int slotZ = z - ( m_gridSize.Z - 1 ) / 2;
 
-                yield return new Position2( slotX, slotZ );
+                yield return new Position2( slotZ, slotX );
             }
         }
     }
@@ -124,14 +124,21 @@ public class FormationConfiguration
     }
 
     /// <summary>
-    /// Removes an entity from the formation.
+    /// Adds an entity to the formation.
     /// </summary>
     /// <param name="a_entity">
     /// The entity to remove.
     /// </param>
-    public void RemoveUnderlingEntity( UnderlingEntity a_entity )
+    public void RemoveUnderlingEntity(UnderlingEntity a_entity)
     {
-        m_underlingUnits.Remove( a_entity );
+        m_underlingUnits.Remove(a_entity);
+        if (m_underlingUnits.Count == 0)
+        {
+            if (a_entity.GetLeader() != Finder.GetPlayer())
+            {
+                GameObject.Destroy(gameObject);
+            }
+        }
     }
 
     /// <summary>
@@ -148,5 +155,27 @@ public class FormationConfiguration
     public UnderlingEntity[] GetUnderlingEntitiesWithValidFormationSlots()
     {
         return GetUnderlingUnits().Where( a_x => IsValid( a_x.GetFormationSlot() ) ).ToArray();
+    }
+
+    public Position2 GetEmptyFormationSlot()
+    {
+        
+        var slots = EnumerateSlotPosition();
+        foreach (var position2 in slots)
+        {
+            bool occupied = false;
+
+            foreach (var underlingEntity in m_underlingUnits)
+            {
+                if (underlingEntity.GetFormationSlot().X == position2.X
+                    && underlingEntity.GetFormationSlot().Z == position2.Z)
+                {
+                    occupied = true;
+                }
+            }
+            if(!occupied)
+                return position2;
+        }
+        return Position2.invalid;
     }
 }

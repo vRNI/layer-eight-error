@@ -19,7 +19,7 @@ public class PlayerMouseController
     private void Update () 
     {
         if ( Finder.GetGameStateManager().IsCurrentState< FormationGameState >() ) { return; }
-        if ( Input.GetMouseButtonUp( MouseButtonIndex.Left ) )
+        if ( Input.GetMouseButtonDown( MouseButtonIndex.Left ) )
         {
             // on hit set desired position
             RaycastHit hit;
@@ -29,8 +29,21 @@ public class PlayerMouseController
                 m_desiredPosition = hit.point + Finder.GetPlayerHeight() / 2.0f;
             }
         }
-
-        var agent = gameObject.GetComponent<NavMeshAgent>();
-        //Debug.Log(agent.velocity);
+        
+        if (Input.GetMouseButtonDown(2))
+        {
+            // on hit set desired position
+            RaycastHit hit;
+            
+            if (MathUtil.RaycastFromMousePointer(out hit) == true)
+            {
+                var gameObject = hit.transform.gameObject;
+                if (gameObject.GetComponent<UnderlingEntity>() != null
+                && gameObject.GetComponent<UnderlingEntity>().GetLeader() == null)
+                {
+                    gameObject.GetComponent<UnderlingEntity>().Resurect();
+                }
+            }
+        }
     }
 }
