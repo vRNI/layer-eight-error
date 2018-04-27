@@ -9,7 +9,12 @@ public class FollowSquad : MonoBehaviour {
     [ Tooltip( "The formation leader that should be followed." ) ]
     [ SerializeField ]
     private GameObject m_formationLeader;
-    
+
+    public void SetFormationLeader(GameObject a_formationLeader)
+    {
+        m_formationLeader = a_formationLeader;
+    }
+
     public GameObject GetFormationLeader()
     {
         return m_formationLeader;

@@ -15,7 +15,12 @@ public static class Finder
 
     public static EntityManager GetEntityManager()
     {
-        return Object.FindObjectOfType<EntityManager>();
+        return Object.FindObjectOfType< EntityManager >();
+    }
+
+    public static SpawnManager GetSpawnManager()
+    {
+        return Object.FindObjectOfType< SpawnManager >();
     }
     
     /// <summary>

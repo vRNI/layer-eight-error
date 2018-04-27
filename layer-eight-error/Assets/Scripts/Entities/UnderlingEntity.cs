@@ -17,7 +17,7 @@ public class UnderlingEntity : BaseEntity {
     protected Position2 m_formationSlot;
     [SerializeField]
     protected bool m_isFriendly;
-    public bool IsFriendly { get { return m_isFriendly; } }
+    public bool IsFriendly { get { return m_isFriendly; } set { m_isFriendly = value; } }
     
 
     private void Start()
@@ -113,7 +113,6 @@ public class UnderlingEntity : BaseEntity {
 
         // timer reset
         base.AttackTarget();
-        gameObject.GetComponent<AnimationInfo>().TriggerAttack();
 
         m_target.ReceiveDamage(m_attackPoints);
         Debug.Log(m_attackPoints + " were inflicted.");
@@ -128,7 +127,15 @@ public class UnderlingEntity : BaseEntity {
     {
         return m_target;
     }
-    
+
+    /// <summary>
+    /// Clamps the vector to a maximal distance on the XZ 2D plane.
+    /// </summary>
+    /// <param name="a_vector">
+    /// The vector to clamp.
+    /// </param>
+    /// <param name="a_maxDistance">
+    /// The max vector length.
     /// </param>
     /// <returns>
     /// The clamped vector.
@@ -151,12 +158,15 @@ public class UnderlingEntity : BaseEntity {
     {
         return m_formationLeader;
     }
+
+    public void SetLeader(GameObject a_leader)
+    {
+        m_formationLeader = a_leader;
+    }
     
     protected override void Die()
     {
         base.Die();
-        
-        gameObject.GetComponent<AnimationInfo>().TriggerDead();
 
         // remove myself from target
         if ( GetTarget() != null )
@@ -176,7 +186,7 @@ public class UnderlingEntity : BaseEntity {
     
     public virtual void Resurect()
     {
-        // todo. update animation info
+        Debug.Log("Ressurect");
         m_isFriendly      = true;
         m_isHostile       = false;
         m_formationLeader = Finder.GetPlayer();
