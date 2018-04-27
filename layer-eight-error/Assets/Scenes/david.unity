@@ -3145,6 +3145,7 @@ MonoBehaviour:
     type: 2}
   m_failStateUs: {fileID: 1698331257143202, guid: eeb581871d29b1a4596612782031f915,
     type: 2}
+  m_flag: {fileID: 1469101327799898, guid: f68550a8cd7eb0f4cb772d729392845b, type: 2}
 --- !u!114 &2129028334
 MonoBehaviour:
   m_ObjectHideFlags: 0

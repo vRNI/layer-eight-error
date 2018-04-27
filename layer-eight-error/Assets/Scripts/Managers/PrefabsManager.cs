@@ -50,4 +50,12 @@ public class PrefabsManager
     {
         return Object.Instantiate( m_failStateUs );
     }
+    
+    [ SerializeField ]
+    private GameObject m_flag;
+    
+    public GameObject InstantiateFlag()
+    {
+        return Object.Instantiate( m_flag );
+    }
 }

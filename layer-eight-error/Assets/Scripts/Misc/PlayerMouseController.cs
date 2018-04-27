@@ -28,6 +28,16 @@ public class PlayerMouseController
             {
                 // add half of player height to desired position, so the distance for idle / walk states are correctly calculated
                 m_desiredPosition = hit.point + Finder.GetPlayerHeight() / 2.0f;
+                // destroy old flag
+                var flagOld       = GameObject.FindGameObjectWithTag( TagName.Flag );
+                if ( flagOld != null )
+                {
+                    Object.Destroy( flagOld );
+                }
+                // create new flag
+                var flagNew               = Finder.GetPrefabs().InstantiateFlag();
+                var flagTransform         = flagNew.GetComponent< Transform >();
+                flagTransform.position    = hit.point;
             }
         }
         
