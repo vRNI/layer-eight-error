@@ -28,6 +28,7 @@ public class EntityStateManager
         m_currentState = new TState();
         m_currentState.SetEntity( m_entity );
         m_currentState.Enter();
+        Debug.Log("Switch to State" + m_currentState);
     }
     
     /// <summary>
