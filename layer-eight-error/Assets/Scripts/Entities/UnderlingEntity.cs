@@ -30,7 +30,12 @@ public class UnderlingEntity : BaseEntity {
     {
         return m_healthPoints <= 0;
     }
-    
+
+    public override bool IsDying()
+    {
+        return IsDead() && m_entityStateManager.IsCurrentState< DeadEntityState >() == false;
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -155,8 +160,6 @@ public class UnderlingEntity : BaseEntity {
     protected override void Die()
     {
         base.Die();
-        
-        gameObject.GetComponent<AnimationInfo>().TriggerDead();
 
         // remove myself from target
         if ( GetTarget() != null )
@@ -171,7 +174,9 @@ public class UnderlingEntity : BaseEntity {
             m_formationLeader = null;
         }
         // set state to dead
+        gameObject.GetComponent<AnimationInfo>().TriggerDead();
         SetCurrentState<DeadEntityState>();
+        
     }
     
     public virtual void Resurect()

@@ -20,10 +20,10 @@ public class DeadEntityState
             m_entity.GetComponent<UnderlingEntity>().enabled = false;
             m_entity.GetComponent<EntityStateManager>().enabled = false;
             m_entity.GetComponent<NavMeshAgent>().enabled = false;
+            //m_entity.GetComponent<Animator>().enabled = false;
 
             Object.Destroy(m_entity.GetComponent<CapsuleCollider>());
             Object.Destroy(m_entity.GetComponent<AnimationInfo>());
-            Object.Destroy(m_entity.GetComponent<Animator>());
         }
     }
 

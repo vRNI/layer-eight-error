@@ -115,6 +115,11 @@ public class BaseEntity : MonoBehaviour {
         return m_healthPoints <= 0;
     }
 
+    public virtual bool IsDying()
+    {
+        return IsDead();
+    }
+
     protected virtual void Die()
     {
         m_registeredCombatSlots.Clear();
@@ -127,7 +132,7 @@ public class BaseEntity : MonoBehaviour {
     
     // Update is called once per frame
     protected virtual void Update () {
-        if ( IsDead() ) // already dead
+        if (IsDying() ) // already dead
         {
            Die();
         }
