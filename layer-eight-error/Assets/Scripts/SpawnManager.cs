@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour {
 
+    [SerializeField]
+    int spawnCap;
+    int spawnCounter = 0;
+
     float m_timer;
     [SerializeField]
     float m_timerIntervall;
@@ -20,13 +24,17 @@ public class SpawnManager : MonoBehaviour {
         if (!Finder.GetGameStateManager().IsCurrentState<FormationGameState>())
             m_timer += Time.deltaTime;
 
-        if (m_timer >= m_timerIntervall)
+        if (!(spawnCounter >= spawnCap))
         {
-            var spawner = GetAvailableSpawner();
-            if (spawner != null)
+            if (m_timer >= m_timerIntervall)
             {
-                spawner.SpawnFormation();
-                m_timer = 0;
+                var spawner = GetAvailableSpawner();
+                if (spawner != null)
+                {
+                    spawner.SpawnFormation();
+                    spawnCounter++;
+                    m_timer = 0;
+                }
             }
         }
 	}
