@@ -17,7 +17,7 @@ public class UnderlingEntity : BaseEntity {
     protected Position2 m_formationSlot;
     [SerializeField]
     protected bool m_isFriendly;
-    public bool IsFriendly { get { return m_isFriendly; } }
+    public bool IsFriendly { get { return m_isFriendly; } set { m_isFriendly = value; } }
     
 
     private void Start()
@@ -155,6 +155,11 @@ public class UnderlingEntity : BaseEntity {
     public GameObject GetLeader()
     {
         return m_formationLeader;
+    }
+
+    public void SetLeader( GameObject a_value )
+    {
+        m_formationLeader = a_value;
     }
     
     protected override void Die()

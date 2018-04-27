@@ -9,6 +9,11 @@ public class FormationBoundsUpdater
     [ SerializeField ]
     private GameObject m_formationLeader;
 
+    public void SetFormationLeader(GameObject a_formationLeader)
+    {
+        m_formationLeader = a_formationLeader;
+    }
+
     private bool m_isFirstUpdate = true;
 
     private void Update()
