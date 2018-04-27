@@ -30,6 +30,12 @@ public class CameraOrbitScript : MonoBehaviour {
     [SerializeField]
     float m_minCameraDistance, m_maxCameraDistance;
 
+    public void SetMinCameraDistance( float a_value )
+    {
+        m_minCameraDistance = a_value;
+        UpdateDistanceToCamera();
+    }
+
     [SerializeField]
     float m_scrollFactor;
 
@@ -74,8 +80,13 @@ public class CameraOrbitScript : MonoBehaviour {
             // adaptive scrolling -> faster scrolling the further away we are
             scrollWheelInputAmount *= m_distanceToCamera * m_scrollFactor;
             m_distanceToCamera += -scrollWheelInputAmount;
-            m_distanceToCamera = Mathf.Clamp(m_distanceToCamera, m_minCameraDistance, m_maxCameraDistance);
+            UpdateDistanceToCamera();
         }
+    }
+
+    void UpdateDistanceToCamera()
+    {
+        m_distanceToCamera = Mathf.Clamp(m_distanceToCamera, m_minCameraDistance, m_maxCameraDistance);
     }
 
     void TransformCamera()

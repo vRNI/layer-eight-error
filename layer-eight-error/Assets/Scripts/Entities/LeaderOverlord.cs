@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 public class LeaderOverlord
     : LeaderEntity
 {
@@ -13,8 +10,9 @@ public class LeaderOverlord
     protected override void Die()
     {
         // change to fail state
-        Finder.GetGameStateManager().GetCurrentState().TriggerTransition< FailGameState >();
-        //// delete myself
-        //Object.Destroy( gameObject );
+        if ( Finder.GetGameStateManager().IsCurrentState< FailGameState >() == false )
+        {
+            Finder.GetGameStateManager().GetCurrentState().TriggerTransition< FailGameState >();
+        }
     }
 }
