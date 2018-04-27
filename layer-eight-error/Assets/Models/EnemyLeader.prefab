@@ -89,7 +89,7 @@ MonoBehaviour:
     X: 9
     Z: 9
   m_slotDistance: {x: 2, y: 2}
-  m_followThreshold: 0.5
+  m_followThreshold: 0.75
   m_followMaxDistance: 2
 --- !u!195 &195350362975866590
 NavMeshAgent:
