@@ -22,7 +22,7 @@ public class DeadEntityState
             m_entity.GetComponent<NavMeshAgent>().enabled = false;
 
             Object.Destroy(m_entity.GetComponent<CapsuleCollider>());
-            Object.Destroy(m_entity.GetComponent<AnimationInfo>());
+            //Object.Destroy(m_entity.GetComponent<AnimatorClipInfo>());
             Object.Destroy(m_entity.GetComponent<Animator>());
         }
     }

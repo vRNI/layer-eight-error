@@ -2079,6 +2079,12 @@ Prefab:
       propertyPath: m_timerIntervall
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 114882008595434726, guid: 7278126e98ce8d447a93fa44f4d16d85,
+        type: 2}
+      propertyPath: m_flag
+      value: 
+      objectReference: {fileID: 1469101327799898, guid: f68550a8cd7eb0f4cb772d729392845b,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7278126e98ce8d447a93fa44f4d16d85, type: 2}
   m_IsPrefabParent: 0
