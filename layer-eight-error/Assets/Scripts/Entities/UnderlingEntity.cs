@@ -155,6 +155,7 @@ public class UnderlingEntity : BaseEntity {
     
     protected virtual void Die()
     {
+        gameObject.GetComponent<AnimationInfo>().TriggerDead();
         m_formationLeader.GetComponent<LeaderEntity>().GetFormationConfiguration().RemoveUnderlingEntity( this );
         m_formationLeader = null;
         SetCurrentState<DeadEntityState>();
@@ -163,6 +164,7 @@ public class UnderlingEntity : BaseEntity {
     public virtual void Resurect()
     {
         Debug.Log("Ressurect");
+
         m_isFriendly      = true;
         m_formationLeader = Finder.GetPlayer();
         var formationConfiguration = m_formationLeader.GetComponent<LeaderOverlord>().GetFormationConfiguration();

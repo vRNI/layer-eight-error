@@ -18,12 +18,20 @@ public class AnimationInfo : MonoBehaviour {
     public void TriggerAttack()
     {
         var rand = (int) Random.Range(0, 10);
-        animator.SetTrigger("Attack");
         animator.SetInteger("Random", rand);
+        animator.SetTrigger("Attack");
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    public void TriggerDead()
+    {
+        var rand = (int)Random.Range(1, 10);
+        animator.SetInteger("Random", rand);
+        animator.SetTrigger("Dead");
+        
+    }
+
+    // Update is called once per frame
+    void Update ()
 	{
         var velocity = GetComponent<NavMeshAgent>().velocity;
 	    speed = Vector3.SqrMagnitude(velocity);

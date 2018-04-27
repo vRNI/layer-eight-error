@@ -17,7 +17,12 @@ public class DeadEntityState
         else
         {
             Finder.GetEntityManager().RemoveUnderling(m_entity);
-            GameObject.Destroy(m_entity.gameObject);
+            m_entity.GetComponent<UnderlingEntity>().enabled = false;
+            m_entity.GetComponent<EntityStateManager>().enabled = false;
+            m_entity.GetComponent<NavMeshAgent>().enabled = false;
+
+            Object.Destroy(m_entity.GetComponent<CapsuleCollider>());
+            Object.Destroy(m_entity.GetComponent<AnimationInfo>());
         }
     }
 
