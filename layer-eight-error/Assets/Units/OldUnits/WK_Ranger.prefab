@@ -2952,6 +2952,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   hostile: 0
+  undeadAvatar: {fileID: 0}
 --- !u!136 &136754254216949284
 CapsuleCollider:
   m_ObjectHideFlags: 1

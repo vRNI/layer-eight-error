@@ -182,6 +182,8 @@ public class UnderlingEntity : BaseEntity {
     public virtual void Resurect()
     {
         // todo. update animation info
+        gameObject.GetComponent<AnimationInfo>().SwitchModel();
+        gameObject.GetComponent<AnimationInfo>().Resurect();
         m_isFriendly      = true;
         m_isHostile       = false;
         m_formationLeader = Finder.GetPlayer();

@@ -9,10 +9,43 @@ public class AnimationInfo : MonoBehaviour {
 
     [SerializeField] private float speed;
     [SerializeField] private bool hostile;
+    private GameObject undead;
+    private GameObject human;
+    [SerializeField] private Avatar undeadAvatar;
 
     // Use this for initialization
     void Start () {
         animator = GetComponent<Animator>();
+        human = gameObject.transform.Find("WK").gameObject;
+        undead = gameObject.transform.Find("UD").gameObject;
+        //if (GetComponent<BaseEntity>().GetEntityType() == EntityType.Fighter)
+        //{
+        //    human = gameObject.transform.Find("WK_Fighter").gameObject;
+        //    undead = gameObject.transform.Find("UD_Fighter").gameObject;
+        //}
+        //if (GetComponent<BaseEntity>().GetEntityType() == EntityType.Mage)
+        //{
+        //    human = gameObject.transform.Find("WK_Mage").gameObject;
+        //    undead = gameObject.transform.Find("UD_Mage").gameObject;
+        //}
+        //if (GetComponent<BaseEntity>().GetEntityType() == EntityType.Ranger)
+        //{
+        //    human = gameObject.transform.Find("WK_Ranger").gameObject;
+        //    undead = gameObject.transform.Find("UD_Ranger").gameObject;
+        //}
+
+    }
+
+    public void SwitchModel()
+    {
+        human.SetActive(false);
+        undead.SetActive(true);
+        GetComponent<Animator>().avatar = undeadAvatar;
+    }
+
+    public void Resurect()
+    {
+        animator.SetTrigger("Resurect");
     }
 
     public void TriggerAttack()

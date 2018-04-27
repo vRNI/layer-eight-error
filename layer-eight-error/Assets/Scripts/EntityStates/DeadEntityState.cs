@@ -13,6 +13,7 @@ public class DeadEntityState
         {
             Finder.GetEntityManager().PushToDeadUnderlings(m_entity);
             m_entity.GetComponent<NavMeshAgent>().enabled = false;
+            m_entity.transform.position += new Vector3(0, 0.2f, 0);
         }
         else
         {
