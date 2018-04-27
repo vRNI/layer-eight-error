@@ -33,6 +33,7 @@ public class WalkEntityState
 
             // remove full entities
             int index = 0;
+            var maybeFullTarget = GetNearestEntity(entities, m_entity.GetWorldPosition(), m_entity.IsFriendly);
             while ( index < entities.Count )
             {
                 var current = entities[ index ];
@@ -68,7 +69,6 @@ public class WalkEntityState
             else // i am a ranger / mage
             {
                 // check maybe full target
-                var maybeFullTarget = GetNearestEntity(entities, m_entity.GetWorldPosition(), m_entity.IsFriendly);
                 if (m_entity.GetTarget() == null && maybeFullTarget != null)
                 {
                     // set own target
