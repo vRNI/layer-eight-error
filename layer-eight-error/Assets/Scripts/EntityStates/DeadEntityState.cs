@@ -23,6 +23,7 @@ public class DeadEntityState
 
             Object.Destroy(m_entity.GetComponent<CapsuleCollider>());
             Object.Destroy(m_entity.GetComponent<AnimationInfo>());
+            Object.Destroy(m_entity.GetComponent<Animator>());
         }
     }
 
