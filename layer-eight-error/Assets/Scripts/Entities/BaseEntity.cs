@@ -59,7 +59,31 @@ public class BaseEntity : MonoBehaviour {
     protected NavMeshAgent m_navMeshAgent;
     protected bool m_isHostile;
     public bool IsHostile { get { return m_isHostile; } set { m_isHostile = value; } }
-    
+
+    private readonly List< BaseEntity > m_registeredCombatSlots = new List< BaseEntity >();
+
+    private const int CombatSlotCount = 3;
+
+    public BaseEntity[] GetRegisteredCombatSlots()
+    {
+        return m_registeredCombatSlots.ToArray();
+    }
+
+    public bool AreCombatSlotsFree()
+    {
+        return m_registeredCombatSlots.Count < CombatSlotCount;
+    }
+
+    public void RegisterToCombatSlot( BaseEntity a_entity )
+    {
+        m_registeredCombatSlots.Add( a_entity );
+    }
+
+    public void DeregisterFromCombatSlot( BaseEntity a_entity )
+    {
+        m_registeredCombatSlots.Remove( a_entity );
+    }
+
     private float m_attackTimer = 0.0f;
 
     public EntityType GetEntityType()
@@ -93,22 +117,23 @@ public class BaseEntity : MonoBehaviour {
 
     protected virtual void Die()
     {
+        m_registeredCombatSlots.Clear();
     }
 
     // Use this for initialization
     void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	protected virtual void Update () {
+        
+    }
+    
+    // Update is called once per frame
+    protected virtual void Update () {
         if ( IsDead() ) // already dead
         {
            Die();
         }
 
-		m_attackTimer += Time.deltaTime;
-	}
+        m_attackTimer += Time.deltaTime;
+    }
 
     protected virtual void Awake()
     {

@@ -28,7 +28,7 @@ public class UnderlingEntity : BaseEntity {
 
     public override bool IsDead()
     {
-        return m_healthPoints <= 0 && m_formationLeader != null;
+        return m_healthPoints <= 0;
     }
     
     protected override void Awake()
@@ -92,7 +92,19 @@ public class UnderlingEntity : BaseEntity {
 
     public virtual void SeekTargetPosition()
     {
-        m_navMeshAgent.SetDestination(m_target.gameObject.transform.position);
+        if ( IsTargetInRange() )
+        {
+            StopWalking();
+        }
+        else
+        {
+            m_navMeshAgent.SetDestination(m_target.gameObject.transform.position);
+        }
+    }
+
+    public bool IsTargetInRange()
+    {
+        return GetDistanceToTarget() < AttackRange;
     }
 
     public override void AttackTarget()
@@ -149,8 +161,21 @@ public class UnderlingEntity : BaseEntity {
     
     protected override void Die()
     {
-        m_formationLeader.GetComponent<LeaderEntity>().GetFormationConfiguration().RemoveUnderlingEntity( this );
-        m_formationLeader = null;
+        base.Die();
+
+        // remove myself from target
+        if ( GetTarget() != null )
+        {
+            GetTarget().DeregisterFromCombatSlot( this );
+            SetTarget( null );
+        }
+        // remove myself from formation configuration
+        if ( m_formationLeader != null )
+        {
+            m_formationLeader.GetComponent<LeaderEntity>().GetFormationConfiguration().RemoveUnderlingEntity( this );
+            m_formationLeader = null;
+        }
+        // set state to dead
         SetCurrentState<DeadEntityState>();
     }
     
@@ -158,6 +183,7 @@ public class UnderlingEntity : BaseEntity {
     {
         Debug.Log("Ressurect");
         m_isFriendly      = true;
+        m_isHostile       = false;
         m_formationLeader = Finder.GetPlayer();
         var formationConfiguration = m_formationLeader.GetComponent<LeaderOverlord>().GetFormationConfiguration();
         var slotPos = formationConfiguration.GetEmptyFormationSlot();
