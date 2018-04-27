@@ -17,7 +17,8 @@ public class SpawnManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        m_timer += Time.deltaTime;
+        if (!Finder.GetGameStateManager().IsCurrentState<FormationGameState>())
+            m_timer += Time.deltaTime;
 
         if (m_timer >= m_timerIntervall)
         {
