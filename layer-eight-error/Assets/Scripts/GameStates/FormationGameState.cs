@@ -262,8 +262,7 @@ public class FormationGameState
         cameraOrbitScript.LocalRotation      = m_originalOrbitRotation;
         
         // update formation collider size
-        var formationBoundsUpdater = Finder.GetPlayer().GetComponentInChildren< FormationBoundsUpdater >();
-        formationBoundsUpdater.UpdateFormationBoundingBox();
+        FollowSquad.UpdateFormationBoundingBox( Finder.GetPlayer() );
 
         base.Exit();
     }

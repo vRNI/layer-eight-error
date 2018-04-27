@@ -1,7 +1,8 @@
 
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+ using System.Linq;
+ using UnityEngine;
  using UnityEngine.AI;
 
 [RequireComponent(typeof(EntityStateManager))]
@@ -24,18 +25,12 @@ public class UnderlingEntity : BaseEntity {
         // add to formation configuration in start, because formation leader is not set in awake
         m_formationLeader.GetComponent<LeaderEntity>().GetFormationConfiguration().AddUnderlingEntity(this);
     }
-    
-    // Update is called once per frame
-    protected override void Update () {
-        base.Update();
 
-        if (m_healthPoints <= 0
-            && m_formationLeader != null) // already dead
-        {
-           Die();
-        }
+    public override bool IsDead()
+    {
+        return m_healthPoints <= 0;
     }
-
+    
     protected override void Awake()
     {
         base.Awake();
@@ -97,7 +92,19 @@ public class UnderlingEntity : BaseEntity {
 
     public virtual void SeekTargetPosition()
     {
-        m_navMeshAgent.SetDestination(m_target.gameObject.transform.position);
+        if ( IsTargetInRange() )
+        {
+            StopWalking();
+        }
+        else
+        {
+            m_navMeshAgent.SetDestination(m_target.gameObject.transform.position);
+        }
+    }
+
+    public bool IsTargetInRange()
+    {
+        return GetDistanceToTarget() < AttackRange;
     }
 
     public override void AttackTarget()
@@ -121,15 +128,7 @@ public class UnderlingEntity : BaseEntity {
     {
         return m_target;
     }
-
-    /// <summary>
-    /// Clamps the vector to a maximal distance on the XZ 2D plane.
-    /// </summary>
-    /// <param name="a_vector">
-    /// The vector to clamp.
-    /// </param>
-    /// <param name="a_maxDistance">
-    /// The max vector length.
+    
     /// </param>
     /// <returns>
     /// The clamped vector.
@@ -153,19 +152,33 @@ public class UnderlingEntity : BaseEntity {
         return m_formationLeader;
     }
     
-    protected virtual void Die()
+    protected override void Die()
     {
+        base.Die();
+        
         gameObject.GetComponent<AnimationInfo>().TriggerDead();
-        m_formationLeader.GetComponent<LeaderEntity>().GetFormationConfiguration().RemoveUnderlingEntity( this );
-        m_formationLeader = null;
+
+        // remove myself from target
+        if ( GetTarget() != null )
+        {
+            GetTarget().DeregisterFromCombatSlot( this );
+            SetTarget( null );
+        }
+        // remove myself from formation configuration
+        if ( m_formationLeader != null )
+        {
+            m_formationLeader.GetComponent<LeaderEntity>().GetFormationConfiguration().RemoveUnderlingEntity( this );
+            m_formationLeader = null;
+        }
+        // set state to dead
         SetCurrentState<DeadEntityState>();
     }
     
     public virtual void Resurect()
     {
-        Debug.Log("Ressurect");
-
+        // todo. update animation info
         m_isFriendly      = true;
+        m_isHostile       = false;
         m_formationLeader = Finder.GetPlayer();
         var formationConfiguration = m_formationLeader.GetComponent<LeaderOverlord>().GetFormationConfiguration();
         var slotPos = formationConfiguration.GetEmptyFormationSlot();
@@ -176,8 +189,7 @@ public class UnderlingEntity : BaseEntity {
         SetCurrentState<SeekFormationSlotPositionState>();
 
         // update formation collider size
-        var formationBoundsUpdater = Finder.GetPlayer().GetComponentInChildren< FormationBoundsUpdater >();
-        formationBoundsUpdater.UpdateFormationBoundingBox();
+        FollowSquad.UpdateFormationBoundingBox( Finder.GetPlayer() );
     }
     
     public float GetDistanceToTarget()
