@@ -3,7 +3,7 @@ Top-Down strategy game about formations.
 
 You are a necromancer with a small undead army. Kill humans to resurrect them and add them to your ranks.
 
-![Game Sample](https://github.com/vRNI/layer-eight-error/blob/master/Gifs/Necroformater_1.gif)
+![Game Sample](https://github.com/vRNI/layer-eight-error/blob/master/Gifs/Necroformater_4.gif)
 
 Made in the fourth Semester as part of the bachelor´s program MultiMediaTechnology in the University of Applied Sciences Salzburg
 Made in a team of three with five days´ time to make a game.
