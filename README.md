@@ -19,5 +19,3 @@ Created by:
 * Arnold Holler - programmer
 * Gabriel Koidl - programmer
 * David Lechner - programmer
-
-We are working on rebasing it to produce a clean build.
